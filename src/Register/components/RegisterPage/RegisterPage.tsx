@@ -1,10 +1,10 @@
 import React from "react"
 
-import {nxtText, assessText, signUpBtnText, alreadyHaveAccText, NxtAssessImg} from '../../../Components/constants'
+import {nxtText, assessText, signUpBtnText, alreadyHaveAccText, NxtAssessImg} from '../../../Common/constants/index.js'
+import InputField from "../../../Common/InputField"
+import Loader from "../../../Common/Loader"
 
-import {RegisterPageProps} from '../../stores/types.ts'
-
-import InputField from "../InputField/index.tsx"
+import {RegisterPageProps} from '../../stores/types'
 
 import {RegisterPageMainContainer, RegisterPageContainer, NxtAssessLogoContainer, NxtAssessLogo,
     NxtAssessText, NxtText, RegisterPageForm, ErrorText, SignUpBtn,
@@ -12,17 +12,28 @@ import {RegisterPageMainContainer, RegisterPageContainer, NxtAssessLogoContainer
 
 export const RegisterPage = (props: RegisterPageProps):JSX.Element => {
 
-    const {onClickSignupForm, usernameProps, nameProps, passwordProps, confirmPasswordProps} = props
+    const {onClickSignupForm, usernameProps, nameProps, passwordProps, confirmPasswordProps, errorMsg, constraint} = props
+
+    const signupForm = (event: React.FormEvent<HTMLInputElement>) => {
+        event.preventDefault()
+        onClickSignupForm()
+    }
+
+    const LoaderComponent = () => {
+        return(
+            <Loader color="#d8dff2" secondaryColor="#ffffff" height={30} width={30}/>
+        )
+    }
 
     const renderRegisterPageForm = () => {
         return(
-            <RegisterPageForm onSubmit={onClickSignupForm}>
+            <RegisterPageForm onSubmit={signupForm}>
                 <InputField requiredProps={usernameProps}/>
                 <InputField requiredProps={nameProps}/>
                 <InputField requiredProps={passwordProps}/>
                 <InputField requiredProps={confirmPasswordProps}/>
-                {/* {errorMsg ? <ErrorText>{errorMsg}</ErrorText> : null} */}
-                <SignUpBtn type="submit">{signUpBtnText}</SignUpBtn>
+                {errorMsg ? <ErrorText>{errorMsg}</ErrorText> : null}
+                <SignUpBtn type="submit">{constraint === 'LOADING' ? <LoaderComponent/> : signUpBtnText}</SignUpBtn>
                 <AlreadyHaveAccText>
                 {alreadyHaveAccText} - 
                 <LinkComponent to="/login"> Click here</LinkComponent>

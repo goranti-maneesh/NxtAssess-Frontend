@@ -24,12 +24,14 @@ export const NxtText = styled.span`
     ${tw`font-bold mr-1`}
 `
 
-export const RegisterPageForm = styled.div``
+export const RegisterPageForm = styled.form``
 
-export const ErrorText = styled.div``
+export const ErrorText = styled.p`
+    ${tw`text-fs14_lh24 text-Flamingo font-normal`}
+`
 
 export const SignUpBtn = styled.button`
-    ${tw`w-360px h-10 bg-Astronaut rounded-8px outline-none text-white font-bold text-fs14_lh24 mb-2`}
+    ${tw`w-360px h-10 bg-Astronaut rounded-8px outline-none text-white font-bold text-fs14_lh24 mb-2 flex justify-center items-center`}
 `
 
 export const AlreadyHaveAccText = styled.p`

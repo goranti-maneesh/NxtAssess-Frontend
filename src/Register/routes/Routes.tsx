@@ -1,30 +1,63 @@
+import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { observer } from 'mobx-react'
 
-
-import React from 'react'
-
-import RegisterPage from '../components/RegisterPage/index.tsx'
+import RegisterPage from '../components/RegisterPage'
 import {InputLabelProps} from '../stores/types'
+import { useRegisterHook } from '../hooks/useRegisterHooks'
 
 import {RegisterPageRouteContainer} from './styledComponents.js'
 
-export const RegisterPageRoute = (): JSX.Element => {
+export const RegisterPageRoute = observer((): JSX.Element => {
 
-    const onClickSignupForm = (): void => {}
+    const registerHook = useRegisterHook()
 
-    const onchangeUsername = (event: React.FormEvent<HTMLInputElement>): void => {}
+    const navigation = useNavigate()
 
-    const onchangeName = (event: React.FormEvent<HTMLInputElement>): void => {}
+    const {username, password, name, confirmPassword, errorMsg, responseStatus, constraint} = registerHook
 
-    const onchangePassword = (event: React.FormEvent<HTMLInputElement>): void => {}
+    const onClickSignupForm = (): void => {
 
-    const onchangeConfirmPassword = (event: React.FormEvent<HTMLInputElement>): void => {}
+        const {setErrorMsg, fetchRegisterAPI} = registerHook
+
+        if(username === "" || name === "" || password === "" || confirmPassword === ""){
+            setErrorMsg("Enter valid inputs")
+        }
+        else{
+            fetchRegisterAPI()
+        }
+    }
+
+    const onchangeUsername = (event: React.FormEvent<HTMLInputElement>): void => {
+        const {setUsername} = registerHook
+
+        setUsername(event.currentTarget.value)
+    }
+
+    const onchangeName = (event: React.FormEvent<HTMLInputElement>): void => {
+        const {setName} = registerHook
+
+        setName(event.currentTarget.value)
+    }
+
+    const onchangePassword = (event: React.FormEvent<HTMLInputElement>): void => {
+        const {setPassword} = registerHook
+
+        setPassword(event.currentTarget.value)
+    }
+
+    const onchangeConfirmPassword = (event: React.FormEvent<HTMLInputElement>): void => {
+        const {setConfirmPassword} = registerHook
+
+        setConfirmPassword(event.currentTarget.value)
+    }
 
     const usernameProps: InputLabelProps = {
         labelText: "USERNAME",
         id: "username",
         placeholder: "Username",
         onChangeMethod: onchangeUsername,
-        value: "",
+        value: username,
         type: "text",
     }
 
@@ -33,7 +66,7 @@ export const RegisterPageRoute = (): JSX.Element => {
         id: "name",
         placeholder: "Name",
         onChangeMethod: onchangeName,
-        value: "",
+        value: name,
         type: "text",
     };
 
@@ -42,7 +75,7 @@ export const RegisterPageRoute = (): JSX.Element => {
         id: "password",
         placeholder: "Password",
         onChangeMethod: onchangePassword,
-        value: "",
+        value: password,
         type: "password",
     };
 
@@ -51,14 +84,20 @@ export const RegisterPageRoute = (): JSX.Element => {
         id: "confirmPassword",
         placeholder: "Confirm password",
         onChangeMethod: onchangeConfirmPassword,
-        value: "",
+        value: confirmPassword,
         type: "password",
     };
+
+    useEffect(() => {
+        if(responseStatus){
+            navigation('/login')
+        }
+    }, [responseStatus])
     
     return(
         <RegisterPageRouteContainer>
-            <RegisterPage onClickSignupForm={onClickSignupForm} usernameProps={usernameProps} nameProps={nameProps} passwordProps={passwordProps} confirmPasswordProps={confirmPasswordProps}/>
+            <RegisterPage onClickSignupForm={onClickSignupForm} usernameProps={usernameProps} nameProps={nameProps} passwordProps={passwordProps} confirmPasswordProps={confirmPasswordProps} errorMsg={errorMsg} constraint={constraint}/>
         </RegisterPageRouteContainer>
     )
 
-}
+})

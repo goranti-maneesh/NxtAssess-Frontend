@@ -1,3 +1,3 @@
-import {RegisterPageRoute} from './Routes.tsx'
+import {RegisterPageRoute} from './Routes'
 
 export default RegisterPageRoute

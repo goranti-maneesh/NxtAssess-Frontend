@@ -1,3 +1,3 @@
-import {RegisterPage} from './RegisterPage.tsx'
+import {RegisterPage} from './RegisterPage'
 
 export default RegisterPage

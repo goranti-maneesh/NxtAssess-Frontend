@@ -1,8 +1,10 @@
 import React from 'react'
 
-import {InputFieldContainer, LabelEle, InputElement} from './styledComponents'
+import { inputFieldPropsTypes } from '../types'
 
-export const InputField = (props) => {
+import {InputFieldContainer, LabelEle, InputElement, StarIcon} from './styledComponents'
+
+export const InputField = (props: inputFieldPropsTypes) => {
 
     const {requiredProps} = props
 
@@ -10,7 +12,7 @@ export const InputField = (props) => {
 
     return(
         <InputFieldContainer>
-            <LabelEle htmlFor={id}>{labelText}</LabelEle>
+            <LabelEle htmlFor={id}>{labelText} <StarIcon fill="#EF4444"/></LabelEle>
             <InputElement type={type} onChange={onChangeMethod} id={id} placeholder={placeholder} value={value}/>
         </InputFieldContainer>
     )

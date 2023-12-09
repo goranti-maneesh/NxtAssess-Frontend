@@ -1,12 +1,13 @@
 import React from "react"
 
 import {nxtText, assessText, signUpBtnText, alreadyHaveAccText, NxtAssessImg} from '../../../Common/constants/index.js'
-import InputField from "../../../Common/InputField"
-import Loader from "../../../Common/Loader"
+import InputField from "../../../Common/components/InputField"
+import Loader from "../../../Common/components/Loader"
+import NxtAssessLogo from "../../../Common/components/NxtAssessLogo"
 
 import {RegisterPageProps} from '../../stores/types'
 
-import {RegisterPageMainContainer, RegisterPageContainer, NxtAssessLogoContainer, NxtAssessLogo,
+import {RegisterPageMainContainer, RegisterPageContainer, NxtAssessLogoContainer,
     NxtAssessText, NxtText, RegisterPageForm, ErrorText, SignUpBtn,
     AlreadyHaveAccText, LinkComponent} from './styledComponents'
 
@@ -45,10 +46,7 @@ export const RegisterPage = (props: RegisterPageProps):JSX.Element => {
     return(
         <RegisterPageMainContainer>
             <RegisterPageContainer>
-                <NxtAssessLogoContainer>
-                    <NxtAssessLogo src={NxtAssessImg}/>
-                    <NxtAssessText><NxtText>{`${nxtText} `}</NxtText>{assessText}</NxtAssessText>
-                </NxtAssessLogoContainer>
+                <NxtAssessLogo nxtAssessImg={NxtAssessImg} textColor="Astronaut"/>
                 {renderRegisterPageForm()}
             </RegisterPageContainer>
         </RegisterPageMainContainer>

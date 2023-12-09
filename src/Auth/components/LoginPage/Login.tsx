@@ -1,9 +1,10 @@
 import React from 'react'
 
-import InputField from '../../../Common/InputField'
+import InputField from '../../../Common/components/InputField'
 import { newToNxtAssessText, NxtAssessImg, nxtText, assessText, loginBtnText } from '../../../Common/constants'
-import Loader from '../../../Common/Loader'
-import { ErrorText, AlreadyHaveAccText, LinkComponent, NxtAssessLogo, NxtAssessLogoContainer, NxtAssessText, NxtText, RegisterPageContainer, RegisterPageForm, RegisterPageMainContainer, SignUpBtn } from '../../../Register/components/RegisterPage/styledComponents'
+import Loader from '../../../Common/components/Loader'
+import NxtAssessLogo from '../../../Common/components/NxtAssessLogo'
+import { ErrorText, AlreadyHaveAccText, LinkComponent, RegisterPageContainer, RegisterPageForm, RegisterPageMainContainer, SignUpBtn } from '../../../Register/components/RegisterPage/styledComponents'
 
 import { inputFieldPropsTypes } from '../../stores/types'
 
@@ -42,10 +43,7 @@ export const LoginPage = (props: inputFieldPropsTypes) => {
         
         <RegisterPageMainContainer>
         <RegisterPageContainer>
-            <NxtAssessLogoContainer>
-                <NxtAssessLogo src={NxtAssessImg}/>
-                <NxtAssessText><NxtText>{`${nxtText} `}</NxtText>{assessText}</NxtAssessText>
-            </NxtAssessLogoContainer>
+            <NxtAssessLogo nxtAssessImg={NxtAssessImg} textColor="Astronaut"/>
             {renderLoginPageForm()}
         </RegisterPageContainer>
     </RegisterPageMainContainer>

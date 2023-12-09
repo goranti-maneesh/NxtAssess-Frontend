@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { inputFieldPropsTypes } from '../types'
+import { inputFieldPropsTypes } from '../../types'
 
 import {InputFieldContainer, LabelEle, InputElement, StarIcon} from './styledComponents'
 

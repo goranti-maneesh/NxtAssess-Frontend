@@ -24,7 +24,9 @@ export const NxtText = styled.span`
     ${tw`font-bold mr-1`}
 `
 
-export const RegisterPageForm = styled.form``
+export const RegisterPageForm = styled.form`
+    ${tw`mt-12`}
+`
 
 export const ErrorText = styled.p`
     ${tw`text-fs14_lh24 text-Flamingo font-normal`}

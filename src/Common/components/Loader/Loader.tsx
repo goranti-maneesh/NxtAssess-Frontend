@@ -1,6 +1,6 @@
 import {Oval} from 'react-loader-spinner'
 
-import {loaderPropsTypes} from '../types'
+import {loaderPropsTypes} from '../../types'
 
 import {LoaderContainer} from './styledComponents'
 

@@ -17,3 +17,8 @@ export interface loaderPropsTypes{
     width: number,
     height: number
 }
+
+export interface NxtAssessLogoPropsTypes {
+    nxtAssessImg: string,
+    textColor: string
+}

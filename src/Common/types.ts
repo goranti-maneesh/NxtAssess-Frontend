@@ -22,3 +22,7 @@ export interface NxtAssessLogoPropsTypes {
     nxtAssessImg: string,
     textColor: string
 }
+
+export interface WrapperComponentPropsTypes{
+    children: JSX.Element
+}

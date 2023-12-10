@@ -2,7 +2,7 @@ import tw from "twin.macro";
 import styled from 'styled-components'
 
 export const HeaderMainContainer = styled.div`
-    ${tw`w-1440px h-88px pl-12 pr-12 bg-Astronaut`}
+    ${tw`w-full h-88px pl-12 pr-12 bg-Astronaut`}
 `
 
 export const HeaderContainer = styled.div`

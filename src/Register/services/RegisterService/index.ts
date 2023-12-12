@@ -1,5 +1,11 @@
-import {registerAPIReqObj, registerAPISuccessRes, registerAPIFailureRes} from '../../stores/types'
+import {
+	RegisterAPIReqObj,
+	RegisterAPISuccessRes,
+	RegisterAPIFailureRes,
+} from "../../stores/types";
 
-export interface RegisterServiceType{
-    fetchRegisterAPI: (userDetails: registerAPIReqObj) => Promise<registerAPISuccessRes | registerAPIFailureRes>
+export interface RegisterServiceType {
+	fetchRegisterAPI: (
+		userDetails: RegisterAPIReqObj,
+	) => Promise<RegisterAPISuccessRes | RegisterAPIFailureRes>;
 }

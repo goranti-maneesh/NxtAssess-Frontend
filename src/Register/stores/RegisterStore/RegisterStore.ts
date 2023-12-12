@@ -2,82 +2,82 @@ import { makeAutoObservable } from "mobx";
 
 import { constraints } from "../../../Common/constants";
 
-import {RegisterServiceType} from '../../services/RegisterService/index'
+import { RegisterServiceType } from "../../services/RegisterService/index";
 
-import {registerAPISuccessRes, registerAPIFailureRes} from '../types'
+import { RegisterAPISuccessRes, RegisterAPIFailureRes } from "../types";
 
-export class RegisterStore{
+export class RegisterStore {
+	constraint: string;
+	name: string;
+	username: string;
+	password: string;
+	confirmPassword: string;
+	errorMsg: string;
+	registerAPIService: RegisterServiceType;
+	responseStatus: boolean;
 
-    constraint: string
-    name: string
-    username: string
-    password: string
-    confirmPassword: string
-    errorMsg: string
-    registerAPIService: RegisterServiceType
-    responseStatus: boolean
+	constructor(registerStoreInstance: RegisterServiceType) {
+		makeAutoObservable(this);
 
-    constructor(registerStoreInstance: RegisterServiceType){
-        makeAutoObservable(this)
+		this.constraint = constraints.initial;
+		this.name = "";
+		this.username = "";
+		this.password = "";
+		this.confirmPassword = "";
+		this.errorMsg = "";
+		this.registerAPIService = registerStoreInstance;
+		this.responseStatus = false;
+	}
 
-        this.constraint = constraints.initial
-        this.name = ""
-        this.username = ""
-        this.password = ""
-        this.confirmPassword = ""
-        this.errorMsg = ""
-        this.registerAPIService = registerStoreInstance
-        this.responseStatus = false
-    }
+	setUsername = (username: string) => {
+		this.username = username;
+	};
 
-    setUsername = (username: string) => {
-        this.username = username
-    }
+	setName = (name: string) => {
+		this.name = name;
+	};
 
-    setName = (name: string) => {
-        this.name = name
-    }
+	setPassword = (password: string) => {
+		this.password = password;
+	};
 
-    setPassword = (password: string) => {
-        this.password = password
-    }
+	setConfirmPassword = (confirmPassword: string) => {
+		this.confirmPassword = confirmPassword;
+	};
 
-    setConfirmPassword = (confirmPassword: string) => {
-        this.confirmPassword = confirmPassword
-    }
+	setErrorMsg = (errorMsg: string) => {
+		this.errorMsg = errorMsg;
+	};
 
-    setErrorMsg = (errorMsg: string) => {
-        this.errorMsg = errorMsg
-    }
+	onSuccessRegisterAPI = (response: RegisterAPISuccessRes) => {
+		this.responseStatus = response.responseStatus;
+	};
 
-    onSuccessRegisterAPI = (response: registerAPISuccessRes) => {
-        this.responseStatus = response.responseStatus
-    }
+	onFailureRegisterAPI = (response: RegisterAPIFailureRes) => {
+		this.responseStatus = response.responseStatus;
+		this.errorMsg = response.error_msg;
+	};
 
-    onFailureRegisterAPI = (response: registerAPIFailureRes) => {
-        this.responseStatus = response.responseStatus
-        this.errorMsg = response.error_msg
-    }
+	fetchRegisterAPI = async () => {
+		this.constraint = constraints.loading;
 
-    fetchRegisterAPI = async () => {
-        this.constraint = constraints.loading
+		const userDetails = {
+			username: this.username,
+			name: this.name,
+			password: this.password,
+			confirm_password: this.confirmPassword,
+		};
 
-        const userDetails = {
-            username: this.username,
-            name: this.name,
-            password: this.password,
-            confirm_password: this.confirmPassword
-        }
+		const response = await this.registerAPIService.fetchRegisterAPI(
+			userDetails,
+		);
 
-        const response = await this.registerAPIService.fetchRegisterAPI(userDetails)
+		if ("message" in response) {
+			this.onSuccessRegisterAPI(response);
+		} else {
+			this.onFailureRegisterAPI(response);
+		}
 
-        if('message' in response){
-            this.onSuccessRegisterAPI(response)
-        }
-        else{
-            this.onFailureRegisterAPI(response)
-        }
-
-        this.constraint = constraints.success
-    }
+		this.constraint = constraints.success;
+	};
 }

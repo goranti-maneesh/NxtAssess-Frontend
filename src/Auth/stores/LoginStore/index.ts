@@ -1,75 +1,69 @@
-import { action, makeAutoObservable, observable } from 'mobx'
-import {constraints} from '../../../Common/constants'
-import {setJwtToken} from '../../../Common/utils/StorageUtils'
+import { makeAutoObservable } from "mobx";
+import { constraints } from "../../../Common/constants";
+import { setJwtToken } from "../../../Common/utils/StorageUtils";
 
-import { LoginService } from '../../services/LoginService/index.api'
-import {LoginServiceType} from '../../services/LoginService/index'
+import { LoginService } from "../../services/LoginService/index.api";
+import { LoginServiceType } from "../../services/LoginService/index";
 
-import {loginFailureTypes, loginSuccessResTypes} from '../types'
+import { LoginFailureTypes, LoginSuccessResTypes } from "../types";
 
-export class LoginStore{
-    @observable constraint: string
-    @observable  responseStatus: boolean
-    @observable  username: string
-    @observable password: string
-    @observable  loginApiInstance: LoginServiceType
-    @observable  errorMsg: string
+export class LoginStore {
+	constraint: string;
+	responseStatus: boolean;
+	username: string;
+	password: string;
+	loginApiInstance: LoginServiceType;
+	errorMsg: string;
 
-    constructor(loginServiceInstance: LoginService){
-        makeAutoObservable(this)
-        this.constraint = constraints.initial
-        this.responseStatus = false
-        this.username = ""
-        this.password = ""
-        this.loginApiInstance = loginServiceInstance
-        this.errorMsg = ""
-    }
+	constructor(loginServiceInstance: LoginService) {
+		makeAutoObservable(this);
+		this.constraint = constraints.initial;
+		this.responseStatus = false;
+		this.username = "";
+		this.password = "";
+		this.loginApiInstance = loginServiceInstance;
+		this.errorMsg = "";
+	}
 
-    @action
-    setUsername = (username: string) => {
-        this.username = username 
-    }
+	setUsername = (username: string) => {
+		this.username = username;
+	};
 
-    @action
-    setPassword = (password: string) => {
-        this.password = password
-    }
+	setPassword = (password: string) => {
+		this.password = password;
+	};
 
-    @action
-    setErrorMsg = (errorMsg: string) => {
-        this.errorMsg = errorMsg
-    }
-    
-    @action
-    onSuccessLoginApi = (response: loginSuccessResTypes) => {
-        console.log(response.responseStatus, response, 'response')
-        setJwtToken(response.jwt_token)
-        this.responseStatus = response.responseStatus
-    }
+	setErrorMsg = (errorMsg: string) => {
+		this.errorMsg = errorMsg;
+	};
 
-    @action
-    onFailureLoginApi = (error_msg: string) => {
-        this.setErrorMsg(error_msg)
-    }
+	onSuccessLoginApi = (response: LoginSuccessResTypes) => {
+		console.log(response.responseStatus, response, "response");
+		setJwtToken(response.jwt_token);
+		this.responseStatus = response.responseStatus;
+	};
 
-    @action
-    fetchLoginApi = async () => {
-        this.constraint = constraints.loading
+	onFailureLoginApi = (error_msg: string) => {
+		this.setErrorMsg(error_msg);
+	};
 
-        const userDetails = {
-            username: this.username,
-            password: this.password
-        }
+	fetchLoginApi = async () => {
+		this.constraint = constraints.loading;
 
-        const loginResponse: loginSuccessResTypes | loginFailureTypes = await this.loginApiInstance.fetchLoginAPI(userDetails)
+		const userDetails = {
+			username: this.username,
+			password: this.password,
+		};
 
-        if("jwt_token" in loginResponse){
-            this.onSuccessLoginApi(loginResponse)
-        }
-        else{
-            this.setErrorMsg(loginResponse.error_msg)
-        }
+		const loginResponse: LoginSuccessResTypes | LoginFailureTypes =
+			await this.loginApiInstance.fetchLoginAPI(userDetails);
 
-        this.constraint = constraints.success
-    }
+		if ("jwt_token" in loginResponse) {
+			this.onSuccessLoginApi(loginResponse);
+		} else {
+			this.setErrorMsg(loginResponse.error_msg);
+		}
+
+		this.constraint = constraints.success;
+	};
 }

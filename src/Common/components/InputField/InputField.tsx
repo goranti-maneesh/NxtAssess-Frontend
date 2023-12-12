@@ -1,20 +1,32 @@
-import React from 'react'
+import React from "react";
 
-import { inputFieldPropsTypes } from '../../types'
+import { InputFieldPropsTypes } from "../../types";
 
-import {InputFieldContainer, LabelEle, InputElement, StarIcon} from './styledComponents'
+import {
+	InputFieldContainer,
+	LabelEle,
+	InputElement,
+	StarIcon,
+} from "./styledComponents";
 
-export const InputField = (props: inputFieldPropsTypes) => {
+export const InputField = (props: InputFieldPropsTypes) => {
+	const { requiredProps } = props;
 
-    const {requiredProps} = props
+	const { type, onChangeMethod, labelText, id, placeholder, value } =
+		requiredProps;
 
-    const {type, onChangeMethod, labelText, id, placeholder, value} = requiredProps
-
-    return(
-        <InputFieldContainer>
-            <LabelEle htmlFor={id}>{labelText} <StarIcon fill="#EF4444"/></LabelEle>
-            <InputElement type={type} onChange={onChangeMethod} id={id} placeholder={placeholder} value={value}/>
-        </InputFieldContainer>
-    )
-
-}
+	return (
+		<InputFieldContainer>
+			<LabelEle htmlFor={id}>
+				{labelText} <StarIcon fill="#EF4444" />
+			</LabelEle>
+			<InputElement
+				type={type}
+				onChange={onChangeMethod}
+				id={id}
+				placeholder={placeholder}
+				value={value}
+			/>
+		</InputFieldContainer>
+	);
+};

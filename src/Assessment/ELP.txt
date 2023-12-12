@@ -1,0 +1,29 @@
+-> When we open the home page, the UI contains the instructions points, image and start assessment button. 
+* Have to achieve the UI in mobile, tablet and desktop devices.
+-> When we click on the start assessment button, the page should be redirected to the `/assessment` route.
+* When the `/assessment` route is opened, then initially the loader should display in the UI. 
+-> Then the 1st MCQ question from the fetched data should display in the UI. 
+-> Each question should contain question and its options. 
+* When we select an option, the option should be highlighted.
+-> Below the question and options, the Next button should display in the UI. 
+-> When we click on the Next button, the next question should display. 
+* If we didn't select any option and click on the Next button, then it should consider as unanswered. 
+* If we selected an option and click on the Next button, then it considered as answered.
+* If the options type is SINGLE_SELECT, then if user didn't select any option and click on Next question, then the answere should be considered as the 1st option by default. 
+* In the assessment page UI, the page should contain timer, answered count, unanswered count, number of questions, and submit button along with the question, options, and Next button. 
+* The timer should run when we start the assessment.
+* If we answer a question, then the answered count should increase and the unanswered count should decrease. 
+* If we skip the question, then the answered and unanswered count should not be increased and decreased.
+* In the UI, the existing number of question should be highlighted.
+* If the question is answered, then the respective question number background should be changed.
+* For the last question, the Next button should not be displayed. 
+* If we click on the submit button, then `/result` route should be displayed.
+* If the timer is done, then the assessment should complete and the `/result` page should display.
+* The UI of the `/result` page should contain different after clicking the submit button and after completion of the time. 
+* The `/result` page should contain `Reattempt` button, Review mistakes button and the score.
+* If we click on the `Reattempt` button, then the assessment should start again from starting. 
+* If we click on the Review mistkaes button, then the mistakes should display along with highlighting the selected option and correct option with respective colors in the `/result` page. 
+* When we open the review mistakes, then the page should contain the Next button.
+* When we click on the Next button, the next review question should display.
+* When the last question is displayed, the Next button should not display and the Done button should display. 
+* If we click on the Done button, then the result page should display.

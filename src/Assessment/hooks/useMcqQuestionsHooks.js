@@ -1,6 +1,6 @@
 import { useContext, createContext } from 'react'
 
-import {McqQuestionsStore} from '../stores/McqQuestionsStore'
+import {McqQuestionsStore} from '../stores/McqQuestionsStore/McqQuestionsStore'
 
 import {McqQuestionsService} from '../services/McqQuestionsService/index.api'
 
@@ -10,7 +10,7 @@ const mcqQuestionsStoreInstance = new McqQuestionsStore(mcqQuestionsServiceInsta
 
 const McqQuestionsContext = createContext(mcqQuestionsStoreInstance)
 
-export const McqQuestionsContextHook = ({children}) => {
+export const McqQuestionsHookContext = ({children}) => {
     return(
         <McqQuestionsContext.Provider value={mcqQuestionsStoreInstance}>
             {children}

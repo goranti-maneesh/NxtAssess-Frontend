@@ -10,14 +10,6 @@ export const AssessmentRoute = observer(() => {
 	const { fetchData, selectOption, existingQuestion, nextQuestion } =
 		mcqQuestionSHook;
 
-	const onClickSelectOption = (id: string) => {
-		selectOption(id);
-	};
-
-	const onClickNextQuestion = () => {
-		nextQuestion();
-	};
-
 	useEffect(() => {
 		fetchData();
 	}, []);

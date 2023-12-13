@@ -18,20 +18,32 @@ import {
 	OptionsUlElement,
 	OptionLiElement,
 	NextQuestionBtn,
-	OptionBtn,
+	QuestionAndOptions,
+	SelectContainer
 } from "./styledComponents";
 import SelectOptions from "../SelectOptions";
 
 export const Assessment = observer(() => {
 	const mcqQuestionsHook = useMcqQuestionsHook();
 
-	const { existingQuestion, nextQuestion, selectOption } = mcqQuestionsHook;
+	const {
+		existingQuestion,
+		nextQuestion,
+		selectOption,
+		selectedOption,
+		questionNumsArray,
+	} = mcqQuestionsHook;
 
 	const renderDefaultOptions = (): JSX.Element => {
 		return (
 			<OptionsUlElement>
 				{existingQuestion.options.map((eachOption) => (
-					<DefaultOptions eachOption={eachOption} />
+					<DefaultOptions
+						eachOption={eachOption}
+						selectOption={selectOption}
+						selectedOption={selectedOption}
+						key={eachOption.id}
+					/>
 				))}
 			</OptionsUlElement>
 		);
@@ -41,14 +53,27 @@ export const Assessment = observer(() => {
 		return (
 			<OptionsUlElement>
 				{existingQuestion.options.map((eachOption) => (
-					<ImageOptions eachOption={eachOption} />
+					<ImageOptions
+						eachOption={eachOption}
+						selectOption={selectOption}
+						selectedOption={selectedOption}
+						key={eachOption.id}
+					/>
 				))}
 			</OptionsUlElement>
 		);
 	};
 
 	const renderSelectOptions = (): JSX.Element => {
-		return <SelectOptions options={existingQuestion.options} />;
+		return (
+			<SelectContainer>
+			<SelectOptions
+				options={existingQuestion.options}
+				selectOption={selectOption}
+				selectedOption={selectedOption}
+			/>
+			</SelectContainer>
+		);
 	};
 
 	const renderOptions = (): JSX.Element | undefined => {
@@ -65,9 +90,11 @@ export const Assessment = observer(() => {
 	const renderQuestion = () => {
 		return (
 			<MCQQuestionSection>
-				<QuestionText>{existingQuestion.questionText}</QuestionText>
-				<HrLine />
-				{renderOptions()}
+				<QuestionAndOptions>
+					<QuestionText>{existingQuestion.questionText}</QuestionText>
+					<HrLine />
+					{renderOptions()}
+				</QuestionAndOptions>
 				<NextQuestionBtn type="button" onClick={() => nextQuestion()}>
 					{nextQuestionText}
 				</NextQuestionBtn>

@@ -41,8 +41,33 @@ export interface UpdatedFetchResDataTypes {
 
 export interface DefaultAndImgOptionsPropsTypes {
 	eachOption: UpdatedFetchOptionsTypes;
+	selectOption: (id: string) => void;
+	selectedOption: string;
 }
 
 export interface SelectOptionsPropsTypes {
 	options: Array<UpdatedFetchOptionsTypes>;
+	selectOption: (id: string) => void;
+	selectedOption: string;
+}
+
+export interface questionNumArray {
+	id: number;
+	value: number;
+	isAnswered: boolean;
+}
+
+export interface assessmentPropsTypes {
+	existingQuestion: UpdatedEachQuestionType;
+	timerText: string;
+	noOfAnsweredQuestions: number;
+	noOfUnansweredQuestions: number;
+	constraint: string;
+	selectedOption: string;
+	questionNumsArray: Array<questionNumArray>;
+	startAssessment: () => void;
+	completeAssessment: () => void;
+	nextQuestion: () => void;
+	selectQuestion: (index: number) => void;
+	selectOption: (id: string) => void;
 }

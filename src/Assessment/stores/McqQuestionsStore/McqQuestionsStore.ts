@@ -8,6 +8,7 @@ import {
 	FetchResDataTypes,
 	UpdatedFetchResDataTypes,
 	UpdatedEachQuestionType,
+	questionNumArray
 } from "../types";
 
 export class McqQuestionsStore {
@@ -25,6 +26,9 @@ export class McqQuestionsStore {
 	constraint: string;
 	APIService: McqQuestionsServiceTypes;
 	uniqueId: NodeJS.Timeout | string;
+	selectedOption: string
+	questionNumsArray: Array<questionNumArray>
+	incorrectAnsweredMCQs: Array<UpdatedEachQuestionType>
 
 	constructor(APIServiceInstance: McqQuestionsServiceTypes) {
 		makeAutoObservable(this);
@@ -53,6 +57,9 @@ export class McqQuestionsStore {
 		this.constraint = constraints.initial;
 		this.APIService = APIServiceInstance;
 		this.uniqueId = "";
+		this.selectedOption = ""
+		this.questionNumsArray = []
+		this.incorrectAnsweredMCQs = []
 	}
 
 	startAssessment = () => {
@@ -62,6 +69,14 @@ export class McqQuestionsStore {
 	completeAssessment = () => {
 		this.isAssessmentStarted = false;
 		clearInterval(this.uniqueId);
+
+		const incorrectAnswers = this.APIResponseData.questions.map((eachQuestion) => {
+			return(
+				eachQuestion.options.filter((eachOption) => eachOption.id !== eachQuestion.userSelectedOptionId)
+			)
+		})
+
+		console.log(incorrectAnswers)
 	};
 
 	startTimer = () => {
@@ -93,6 +108,7 @@ export class McqQuestionsStore {
 
 	selectOption = (id: string) => {
 		this.APIResponseData.questions[this.index].userSelectedOptionId = id;
+		this.selectedOption = id
 	};
 
 	onSuccessAPI = (response: FetchResDataTypes) => {
@@ -107,7 +123,14 @@ export class McqQuestionsStore {
 		};
 		this.constraint = constraints.success;
 		this.existingQuestion = updatedResponse[0];
-		console.log(updatedResponse[0]);
+
+		const numbersArr = [...Array(response.total).keys()].map(num => ({
+			id: num,
+			value: num + 1,
+			isAnswered: false
+		}))
+
+		this.questionNumsArray = numbersArr
 
 		this.startTimer();
 	};

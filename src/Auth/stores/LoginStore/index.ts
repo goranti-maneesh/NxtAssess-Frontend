@@ -38,7 +38,6 @@ export class LoginStore {
 	};
 
 	onSuccessLoginApi = (response: LoginSuccessResTypes) => {
-		console.log(response.responseStatus, response, "response");
 		setJwtToken(response.jwt_token);
 		this.responseStatus = response.responseStatus;
 	};

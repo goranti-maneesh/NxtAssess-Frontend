@@ -4,14 +4,16 @@ import styled from "styled-components";
 export const AssessmentMainContainer = styled.div``;
 
 export const AssessmentContainer = styled.div`
-	${tw`p-8 bg-Selago h-90vh`}
+	${tw`p-8 bg-Selago h-90vh flex`}
 `;
 
 export const MCQQuestionSection = styled.div`
-	${tw`bg-white shadow-assessmentPage p-12 h-full flex flex-col justify-between`}
+	${tw`bg-white shadow-assessmentPage p-12 h-full max-h-837px flex flex-col justify-between mr-8  max-w-928px w-70per `}
 `;
 
-export const MCQDetailsSection = styled.div``;
+export const MCQDetailsSection = styled.div`
+	${tw`w-30per max-w-416px h-full`}
+`;
 
 export const QuestionText = styled.h1`
 	${tw`text-ChathamsBlue text-fs20_lh30 font-medium`}

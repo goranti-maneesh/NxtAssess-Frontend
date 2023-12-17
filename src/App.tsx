@@ -6,6 +6,7 @@ import RegisterPageRoute from "./Register/routes";
 import LoginPageRoute from "./Auth/routes";
 import HomeRoute from "./Assessment/components/Home";
 import AssessmentRoute from "./Assessment/routes";
+import Result from "./Assessment/components/Result";
 
 import { LoginHookContext } from "./Auth/hooks/useLoginHooks.js";
 import { RegisterHookContext } from "./Register/hooks/useRegisterHooks.js";
@@ -46,6 +47,7 @@ const App = () => {
 									path="/assessment"
 									element={<AssessmentRoute />}
 								/>
+								<Route path="/result" element={<Result />} />
 							</Routes>
 						</McqQuestionsHookContext>
 					</RegisterHookContext>

@@ -36,7 +36,7 @@ export const LoginPage = (props: InputFieldPropsTypes) => {
 		onSubmitLoginForm();
 	};
 
-	const LoaderComponent = (): JSX.Element => {
+	const renderLoader = (): JSX.Element => {
 		return (
 			<Loader
 				color="#d8dff2"
@@ -55,7 +55,7 @@ export const LoginPage = (props: InputFieldPropsTypes) => {
 				{errorMsg ? <ErrorText>{errorMsg}</ErrorText> : null}
 				<SignUpBtn type="submit">
 					{constraint === "LOADING" ? (
-						<LoaderComponent />
+						renderLoader()
 					) : (
 						loginBtnText
 					)}

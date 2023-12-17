@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { constraints } from "../../../Common/constants";
+import { answeredQuestionsText, constraints } from "../../../Common/constants";
 
 import { McqQuestionsServiceTypes } from "../../services/McqQuestionsService";
 
@@ -8,7 +8,8 @@ import {
 	FetchResDataTypes,
 	UpdatedFetchResDataTypes,
 	UpdatedEachQuestionType,
-	questionNumArray
+	questionNumArray,
+	useNavigateMethodTypes,
 } from "../types";
 
 export class McqQuestionsStore {
@@ -23,12 +24,14 @@ export class McqQuestionsStore {
 	noOfUnansweredQuestions: number;
 	score: number;
 	isTimeup: boolean;
-	constraint: string;
+	apiStatus: string;
 	APIService: McqQuestionsServiceTypes;
 	uniqueId: NodeJS.Timeout | string;
-	selectedOption: string
-	questionNumsArray: Array<questionNumArray>
-	incorrectAnsweredMCQs: Array<UpdatedEachQuestionType>
+	selectedOption: string;
+	questionNumsArray: Array<questionNumArray>;
+	incorrectAnsweredMCQs: Array<UpdatedEachQuestionType>;
+	isLastQuestion: boolean;
+	navigate: any;
 
 	constructor(APIServiceInstance: McqQuestionsServiceTypes) {
 		makeAutoObservable(this);
@@ -49,17 +52,19 @@ export class McqQuestionsStore {
 			userSelectedOptionId: "",
 		};
 		this.wholeTimerSecs = 600;
-		this.timerText = "00:00:00";
+		this.timerText = "00:10:00";
 		this.noOfAnsweredQuestions = 0;
 		this.noOfUnansweredQuestions = 0;
 		this.score = 0;
 		this.isTimeup = false;
-		this.constraint = constraints.initial;
+		this.apiStatus = constraints.initial;
 		this.APIService = APIServiceInstance;
 		this.uniqueId = "";
-		this.selectedOption = ""
-		this.questionNumsArray = []
-		this.incorrectAnsweredMCQs = []
+		this.selectedOption = "";
+		this.questionNumsArray = [];
+		this.incorrectAnsweredMCQs = [];
+		this.isLastQuestion = false;
+		this.navigate = {};
 	}
 
 	startAssessment = () => {
@@ -68,33 +73,77 @@ export class McqQuestionsStore {
 
 	completeAssessment = () => {
 		this.isAssessmentStarted = false;
+
 		clearInterval(this.uniqueId);
 
-		const incorrectAnswers = this.APIResponseData.questions.map((eachQuestion) => {
-			return(
-				eachQuestion.options.filter((eachOption) => eachOption.id !== eachQuestion.userSelectedOptionId)
-			)
-		})
+		this.navigate("/result", { replace: true });
 
-		console.log(incorrectAnswers)
+		const incorrectAnswers = this.APIResponseData.questions.filter(
+			(eachQuestion) => {
+				const eachQuestionResults = eachQuestion.options.filter(
+					(eachOption) => {
+						console.log(
+							eachOption.id,
+							eachQuestion.userSelectedOptionId,
+							eachOption.id === eachQuestion.userSelectedOptionId,
+						);
+						return (
+							eachOption.isCorrect === "true" &&
+							eachOption.id === eachQuestion.userSelectedOptionId
+						);
+					},
+				);
+				console.log(eachQuestionResults);
+				return eachQuestionResults.length === 0;
+			},
+		);
+
+		this.incorrectAnsweredMCQs = incorrectAnswers
+		this.score = this.APIResponseData.total - incorrectAnswers.length
+		
+	};
+
+	setNavigateMethod = (navigate: any) => {
+		this.navigate = navigate;
 	};
 
 	startTimer = () => {
 		this.uniqueId = setInterval(this.changeTimer, 1000);
 	};
 
+	convertTimerValueToString = (time: number) => {
+		if (time < 10) {
+			return `0${time}`;
+		}
+		return time;
+	};
+
 	changeTimer = () => {
-		const hours = this.wholeTimerSecs / 3600;
-		const minutes = (this.wholeTimerSecs % 3600) / 60;
-		const seconds = this.wholeTimerSecs % 60;
+		this.wholeTimerSecs -= 1;
+
+		const hours = this.convertTimerValueToString(
+			Math.floor(this.wholeTimerSecs / 3600),
+		);
+		const minutes = this.convertTimerValueToString(
+			Math.floor((this.wholeTimerSecs % 3600) / 60),
+		);
+		const seconds = this.convertTimerValueToString(
+			this.wholeTimerSecs % 60,
+		);
+
+		if (this.wholeTimerSecs === 0) {
+			this.completeAssessment();
+		}
 
 		this.timerText = `${hours}:${minutes}:${seconds}`;
-
-		this.wholeTimerSecs -= 1;
 	};
 
 	nextQuestion = () => {
-		if (this.index < this.APIResponseData.total) {
+		if (this.noOfAnsweredQuestions === this.APIResponseData.total - 1) {
+			this.isLastQuestion = true;
+		}
+
+		if (this.index < this.APIResponseData.total - 1) {
 			const updatedIndex = this.index + 1;
 			this.index = updatedIndex;
 			this.existingQuestion =
@@ -102,13 +151,23 @@ export class McqQuestionsStore {
 		}
 	};
 
-	selectQuestion = (index: number) => {
-		this.index = index;
+	selectQuestion = (value: number) => {
+		this.index = value - 1;
+		this.existingQuestion = this.APIResponseData.questions[value - 1];
+
+		if (this.noOfAnsweredQuestions === this.APIResponseData.total - 1) {
+			this.isLastQuestion = true;
+		}
 	};
 
 	selectOption = (id: string) => {
 		this.APIResponseData.questions[this.index].userSelectedOptionId = id;
-		this.selectedOption = id
+		this.selectedOption = id;
+		if (!this.questionNumsArray[this.index].isAnswered) {
+			this.noOfAnsweredQuestions += 1;
+			this.noOfUnansweredQuestions -= 1;
+		}
+		this.questionNumsArray[this.index].isAnswered = true;
 	};
 
 	onSuccessAPI = (response: FetchResDataTypes) => {
@@ -121,30 +180,29 @@ export class McqQuestionsStore {
 			questions: updatedResponse,
 			responseStatus: response.responseStatus,
 		};
-		this.constraint = constraints.success;
+		this.apiStatus = constraints.success;
 		this.existingQuestion = updatedResponse[0];
 
-		const numbersArr = [...Array(response.total).keys()].map(num => ({
+		const numbersArr = [...Array(response.total).keys()].map((num) => ({
 			id: num,
 			value: num + 1,
-			isAnswered: false
-		}))
+			isAnswered: false,
+		}));
 
-		this.questionNumsArray = numbersArr
+		this.questionNumsArray = numbersArr;
+		this.noOfUnansweredQuestions = response.total;
 
 		this.startTimer();
 	};
 
 	onFailureAPI = () => {
-		this.constraint = constraints.failure;
+		this.apiStatus = constraints.failure;
 	};
 
 	fetchData = async () => {
-		this.constraint = constraints.loading;
+		this.apiStatus = constraints.loading;
 
 		const response = await this.APIService.fetchMcqQuestionsData();
-
-		console.log(response);
 
 		if ("questions" in response) {
 			this.onSuccessAPI(response);

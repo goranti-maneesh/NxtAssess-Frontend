@@ -6,7 +6,11 @@ export const ImageOptionLiElement = styled.li`
 `;
 
 export const ImageOptionBtn = styled.button`
-	${tw`outline-none`}
+	${tw`outline-none cursor-pointer`}
+
+	${(props) =>
+		props.isSelected &&
+		tw`border-2 border-solid border-Astronaut rounded-4px`}
 `;
 
 export const ImgOption = styled.img`

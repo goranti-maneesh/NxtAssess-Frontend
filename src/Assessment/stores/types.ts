@@ -71,3 +71,7 @@ export interface assessmentPropsTypes {
 	selectQuestion: (index: number) => void;
 	selectOption: (id: string) => void;
 }
+
+export interface useNavigateMethodTypes{
+	NavigateFunction: (to: string | number, options?: { replace?: boolean }) => void;
+} 

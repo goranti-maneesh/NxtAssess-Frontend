@@ -1,12 +1,11 @@
 import { observer } from "mobx-react";
-import Header from "../../../Common/components/Header";
-import WrapperComponent from "../../../Common/components/WrapperComponent";
 import { nextQuestionText, optionTypes } from "../../../Common/constants";
 
 import { useMcqQuestionsHook } from "../../hooks/useMcqQuestionsHooks";
 
 import DefaultOptions from "../DefaultOptions";
 import ImageOptions from "../Imageoptions";
+import MCQDetails from "../MCQDetails";
 
 import {
 	AssessmentMainContainer,
@@ -19,7 +18,7 @@ import {
 	OptionLiElement,
 	NextQuestionBtn,
 	QuestionAndOptions,
-	SelectContainer
+	SelectContainer,
 } from "./styledComponents";
 import SelectOptions from "../SelectOptions";
 
@@ -31,7 +30,7 @@ export const Assessment = observer(() => {
 		nextQuestion,
 		selectOption,
 		selectedOption,
-		questionNumsArray,
+		isLastQuestion,
 	} = mcqQuestionsHook;
 
 	const renderDefaultOptions = (): JSX.Element => {
@@ -67,16 +66,16 @@ export const Assessment = observer(() => {
 	const renderSelectOptions = (): JSX.Element => {
 		return (
 			<SelectContainer>
-			<SelectOptions
-				options={existingQuestion.options}
-				selectOption={selectOption}
-				selectedOption={selectedOption}
-			/>
+				<SelectOptions
+					options={existingQuestion.options}
+					selectOption={selectOption}
+					selectedOption={selectedOption}
+				/>
 			</SelectContainer>
 		);
 	};
 
-	const renderOptions = (): JSX.Element | undefined => {
+	const renderOptions = (): JSX.Element | null => {
 		switch (existingQuestion.optionsType) {
 			case optionTypes.default:
 				return renderDefaultOptions();
@@ -84,8 +83,16 @@ export const Assessment = observer(() => {
 				return renderImageOptions();
 			case optionTypes.select:
 				return renderSelectOptions();
+			default:
+				return null;
 		}
 	};
+
+	const renderNextButton = () => (
+		<NextQuestionBtn type="button" onClick={() => nextQuestion()}>
+			{nextQuestionText}
+		</NextQuestionBtn>
+	);
 
 	const renderQuestion = () => {
 		return (
@@ -95,22 +102,19 @@ export const Assessment = observer(() => {
 					<HrLine />
 					{renderOptions()}
 				</QuestionAndOptions>
-				<NextQuestionBtn type="button" onClick={() => nextQuestion()}>
-					{nextQuestionText}
-				</NextQuestionBtn>
+				{isLastQuestion ? null : renderNextButton()}
 			</MCQQuestionSection>
 		);
 	};
 
 	return (
-		<WrapperComponent>
-			<AssessmentMainContainer>
-				<Header />
-				<AssessmentContainer>
-					{renderQuestion()}
-					<MCQDetailsSection></MCQDetailsSection>
-				</AssessmentContainer>
-			</AssessmentMainContainer>
-		</WrapperComponent>
+		<AssessmentMainContainer>
+			<AssessmentContainer>
+				{renderQuestion()}
+				<MCQDetailsSection>
+					<MCQDetails />
+				</MCQDetailsSection>
+			</AssessmentContainer>
+		</AssessmentMainContainer>
 	);
 });

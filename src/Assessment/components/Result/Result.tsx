@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Header from "../../../Common/components/Header";
 import WrapperComponent from "../../../Common/components/WrapperComponent";
 import {
@@ -32,7 +35,26 @@ import {
 export const Result = () => {
 	const mcqQuestionsHook = useMcqQuestionsHook();
 
-	const { score, timerText, wholeTimerSecs } = mcqQuestionsHook;
+	const navigate = useNavigate();
+
+	const {
+		score,
+		timerText,
+		wholeTimerSecs,
+		reattemptAssessment,
+		noOfAnsweredQuestions,
+	} = mcqQuestionsHook;
+
+	useEffect(() => {
+		if (wholeTimerSecs === 600 && noOfAnsweredQuestions === 0) {
+			navigate("/", { replace: true });
+		}
+	}, []);
+
+	const onClcikReattemptBtn = () => {
+		reattemptAssessment(navigate);
+		navigate("/assessment", { replace: true });
+	};
 
 	const renderAssessmentCompletePage = () => {
 		return (
@@ -47,7 +69,9 @@ export const Result = () => {
 					{`${yourScoreText} `}
 					<ScoreText>{score}</ScoreText>
 				</YourScoreText>
-				<ReattemptBtn>{reattemptText}</ReattemptBtn>
+				<ReattemptBtn type="button" onClick={onClcikReattemptBtn}>
+					{reattemptText}
+				</ReattemptBtn>
 			</ResultPageContainer>
 		);
 	};
@@ -64,7 +88,9 @@ export const Result = () => {
 					{`${yourScoreText} `}
 					<ScoreText>{score}</ScoreText>
 				</YourScoreText>
-				<ReattemptBtn>{reattemptText}</ReattemptBtn>
+				<ReattemptBtn type="button" onClick={onClcikReattemptBtn}>
+					{reattemptText}
+				</ReattemptBtn>
 			</ResultPageContainer>
 		);
 	};

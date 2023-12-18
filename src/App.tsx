@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { ObjContext } from "./Common/context";
+import ProtectedRoute from "./Common/components/ProtectedRoute";
 import RegisterPageRoute from "./Register/routes";
 import LoginPageRoute from "./Auth/routes";
 import HomeRoute from "./Assessment/components/Home";
 import AssessmentRoute from "./Assessment/routes";
-import Result from "./Assessment/components/Result";
+import ResultRoute from "./Assessment/components/Result";
 
 import { LoginHookContext } from "./Auth/hooks/useLoginHooks.js";
 import { RegisterHookContext } from "./Register/hooks/useRegisterHooks.js";
@@ -35,19 +36,24 @@ const App = () => {
 						<McqQuestionsHookContext>
 							<Routes>
 								<Route
-									path="/register"
-									element={<RegisterPageRoute />}
-								/>
-								<Route
 									path="/login"
 									element={<LoginPageRoute />}
 								/>
-								<Route path="/" element={<HomeRoute />} />
 								<Route
-									path="/assessment"
-									element={<AssessmentRoute />}
+									path="/register"
+									element={<RegisterPageRoute />}
 								/>
-								<Route path="/result" element={<Result />} />
+								<Route element={<ProtectedRoute />}>
+									<Route path="/" element={<HomeRoute />} />
+									<Route
+										path="/assessment"
+										element={<AssessmentRoute />}
+									/>
+									<Route
+										path="/result"
+										element={<ResultRoute />}
+									/>
+								</Route>
 							</Routes>
 						</McqQuestionsHookContext>
 					</RegisterHookContext>

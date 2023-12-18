@@ -34,7 +34,7 @@ import {
 export const MCQDetails = observer(() => {
 	const mcqQuestionsHook = useMcqQuestionsHook();
 
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	const {
 		questionNumsArray,
@@ -48,8 +48,8 @@ export const MCQDetails = observer(() => {
 	} = mcqQuestionsHook;
 
 	const submitTest = () => {
-		completeAssessment()
-	}
+		completeAssessment();
+	};
 
 	const renderQuestionNumbers = () => {
 		return questionNumsArray.map((eachQuestionNum) => (

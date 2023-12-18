@@ -82,25 +82,19 @@ export class McqQuestionsStore {
 			(eachQuestion) => {
 				const eachQuestionResults = eachQuestion.options.filter(
 					(eachOption) => {
-						console.log(
-							eachOption.id,
-							eachQuestion.userSelectedOptionId,
-							eachOption.id === eachQuestion.userSelectedOptionId,
-						);
 						return (
 							eachOption.isCorrect === "true" &&
 							eachOption.id === eachQuestion.userSelectedOptionId
 						);
 					},
 				);
-				console.log(eachQuestionResults);
+
 				return eachQuestionResults.length === 0;
 			},
 		);
 
-		this.incorrectAnsweredMCQs = incorrectAnswers
-		this.score = this.APIResponseData.total - incorrectAnswers.length
-		
+		this.incorrectAnsweredMCQs = incorrectAnswers;
+		this.score = this.APIResponseData.total - incorrectAnswers.length;
 	};
 
 	setNavigateMethod = (navigate: any) => {
@@ -170,6 +164,11 @@ export class McqQuestionsStore {
 		this.questionNumsArray[this.index].isAnswered = true;
 	};
 
+	reattemptAssessment = (navigate: any) => {
+		this.fetchData();
+		this.navigate = navigate;
+	};
+
 	onSuccessAPI = (response: FetchResDataTypes) => {
 		const updatedResponse = response.questions.map(
 			(eachQuestion) => new McqQuestionsModel(eachQuestion),
@@ -191,6 +190,9 @@ export class McqQuestionsStore {
 
 		this.questionNumsArray = numbersArr;
 		this.noOfUnansweredQuestions = response.total;
+		this.noOfAnsweredQuestions = 0;
+		this.wholeTimerSecs = 600;
+		this.score = 0;
 
 		this.startTimer();
 	};

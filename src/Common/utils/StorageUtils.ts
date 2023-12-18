@@ -20,7 +20,3 @@ export const getJwtToken = () => {
 export const removeJwtToken = () => {
     Cookies.remove(JWTtoken)
 }
-
-export const getToken = () => {
-    getJwtToken()
-}

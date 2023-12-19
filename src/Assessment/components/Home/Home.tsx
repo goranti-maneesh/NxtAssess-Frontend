@@ -21,6 +21,7 @@ import {
 	InstructionPointValue,
 	StartAssessmentBtn,
 	HomePageAssessmentImg,
+	Instructions
 } from "./styledComponents";
 
 export const Home = () => {
@@ -28,6 +29,28 @@ export const Home = () => {
 
 	const onClickStartAssessment = () => {
 		navigate("/assessment");
+	};
+
+	const renderInstructions = () => {
+		return (
+			<Instructions>
+				{homePageInstructionPoints.map((eachPoint) => (
+					<InstructionPoint key={eachPoint.number}>
+						<InstructionPointNumber>
+							{eachPoint.number}
+						</InstructionPointNumber>
+						<InstructionKeyAndValue>
+							{eachPoint.keyText !== "" ? (
+								<InstructionPointKey>{`${eachPoint.keyText} `}</InstructionPointKey>
+							) : null}
+							<InstructionPointValue>
+								{eachPoint.value}
+							</InstructionPointValue>
+						</InstructionKeyAndValue>
+					</InstructionPoint>
+				))}
+			</Instructions>
+		);
 	};
 
 	return (
@@ -39,21 +62,7 @@ export const Home = () => {
 						<InstructionsHeading>
 							{instructionsText}
 						</InstructionsHeading>
-						{homePageInstructionPoints.map((eachPoint) => (
-							<InstructionPoint key={eachPoint.number}>
-								<InstructionPointNumber>
-									{eachPoint.number}
-								</InstructionPointNumber>
-								<InstructionKeyAndValue>
-									{eachPoint.keyText !== "" ? (
-										<InstructionPointKey>{`${eachPoint.keyText} `}</InstructionPointKey>
-									) : null}
-									<InstructionPointValue>
-										{eachPoint.value}
-									</InstructionPointValue>
-								</InstructionKeyAndValue>
-							</InstructionPoint>
-						))}
+						{renderInstructions()}
 						<StartAssessmentBtn
 							type="button"
 							onClick={onClickStartAssessment}>

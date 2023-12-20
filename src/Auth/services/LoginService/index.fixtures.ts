@@ -1,6 +1,9 @@
 import { resolveWithTimeout } from "../../../Common/utils/TestUtils";
 
-import { UserDetailsTypes, LoginSuccessResTypes } from "../../stores/types";
+import {
+	UserDetailsTypes,
+	LoginSuccessResTypes,
+} from "../../stores/Types/loginTypes";
 import loginFixturesData from "../../fixtures/getLoginResponse.json";
 
 import { LoginServiceType } from "./index";

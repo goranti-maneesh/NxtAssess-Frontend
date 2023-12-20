@@ -6,7 +6,7 @@ import {
 	ImgOption,
 } from "./styledComponents";
 
-export const ImageOptions = (props: DefaultAndImgOptionsPropsTypes) => {
+export const ImageOptions = (props: DefaultAndImgOptionsPropsTypes): JSX.Element => {
 	const { eachOption, selectOption, selectedOption } = props;
 
 	const onClickOption = (id: string) => {

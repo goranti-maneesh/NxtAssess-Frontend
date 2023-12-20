@@ -1,65 +1,58 @@
-import { useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import { ObjContext } from "./Common/context";
+import {
+	homeRoute,
+	loginRoute,
+	registerRoute,
+	assessmentRoute,
+	resultRoute,
+} from "./Common/constants";
+
 import ProtectedRoute from "./Common/components/ProtectedRoute";
-import RegisterPageRoute from "./Register/routes";
-import LoginPageRoute from "./Auth/routes";
+import RegisterPageRoute from "./Auth/routes/RegisterRouter";
+import LoginPageRoute from "./Auth/routes/LoginRoute";
 import HomeRoute from "./Assessment/components/Home";
 import AssessmentRoute from "./Assessment/routes";
 import ResultRoute from "./Assessment/components/Result";
 
-import { LoginHookContext } from "./Auth/hooks/useLoginHooks.js";
-import { RegisterHookContext } from "./Register/hooks/useRegisterHooks.js";
+import { LoginHookContext } from "./Auth/hooks/useLoginHooks";
+import { RegisterHookContext } from "./Auth/hooks/useRegisterHooks";
 import { McqQuestionsHookContext } from "./Assessment/hooks/useMcqQuestionsHooks";
 
-const mediaQuery = window.matchMedia("(min-width: 768px)");
-
-const App = () => {
-	const [isDesktopView, setScreenSize] = useState(
-		mediaQuery.matches as boolean,
-	);
-
-	useEffect(() => {
-		const changeScreenSize = (event: MediaQueryListEvent) => {
-			setScreenSize(event.matches);
-		};
-
-		mediaQuery.onchange = (event) => changeScreenSize(event);
-	}, []);
-
+const App = (): JSX.Element => {
 	return (
-		<ObjContext.Provider value={{ isDesktopView: isDesktopView }}>
-			<BrowserRouter>
-				<LoginHookContext>
-					<RegisterHookContext>
-						<McqQuestionsHookContext>
-							<Routes>
+		<BrowserRouter>
+			<LoginHookContext>
+				<RegisterHookContext>
+					<McqQuestionsHookContext>
+						<Routes>
+							<Route
+								path={loginRoute}
+								element={<LoginPageRoute />}
+							/>
+							<Route
+								path={registerRoute}
+								element={<RegisterPageRoute />}
+							/>
+							<Route element={<ProtectedRoute />}>
 								<Route
-									path="/login"
-									element={<LoginPageRoute />}
+									path={homeRoute}
+									element={<HomeRoute />}
 								/>
 								<Route
-									path="/register"
-									element={<RegisterPageRoute />}
+									path={assessmentRoute}
+									element={<AssessmentRoute />}
 								/>
-								<Route element={<ProtectedRoute />}>
-									<Route path="/" element={<HomeRoute />} />
-									<Route
-										path="/assessment"
-										element={<AssessmentRoute />}
-									/>
-									<Route
-										path="/result"
-										element={<ResultRoute />}
-									/>
-								</Route>
-							</Routes>
-						</McqQuestionsHookContext>
-					</RegisterHookContext>
-				</LoginHookContext>
-			</BrowserRouter>
-		</ObjContext.Provider>
+								<Route
+									path={resultRoute}
+									element={<ResultRoute />}
+								/>
+							</Route>
+						</Routes>
+					</McqQuestionsHookContext>
+				</RegisterHookContext>
+			</LoginHookContext>
+		</BrowserRouter>
 	);
 };
 

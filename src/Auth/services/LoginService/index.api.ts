@@ -1,4 +1,4 @@
-import { UserDetailsTypes } from "../../stores/types";
+import { UserDetailsTypes } from "../../stores/Types/loginTypes";
 
 import { LoginServiceType } from "./index";
 

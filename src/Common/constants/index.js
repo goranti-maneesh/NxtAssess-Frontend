@@ -1,3 +1,9 @@
+export const homeRoute = "/"
+export const loginRoute = "/login"
+export const registerRoute = "/register"
+export const assessmentRoute = "/assessment"
+export const resultRoute = "/result"
+
 export const nxtText = "NXT";
 export const assessText = "Assess";
 export const signUpBtnText = "Sign Up";

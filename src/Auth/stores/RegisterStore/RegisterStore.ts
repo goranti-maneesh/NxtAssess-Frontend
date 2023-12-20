@@ -4,7 +4,10 @@ import { constraints } from "../../../Common/constants";
 
 import { RegisterServiceType } from "../../services/RegisterService/index";
 
-import { RegisterAPISuccessRes, RegisterAPIFailureRes } from "../types";
+import {
+	RegisterAPISuccessRes,
+	RegisterAPIFailureRes,
+} from "../Types/registerTypes";
 
 export class RegisterStore {
 	constraint: string;

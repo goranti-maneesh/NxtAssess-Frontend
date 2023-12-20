@@ -22,7 +22,7 @@ import {
 } from "./styledComponents";
 import SelectOptions from "../SelectOptions";
 
-export const Assessment = observer(() => {
+export const Assessment = observer((): JSX.Element => {
 	const mcqQuestionsHook = useMcqQuestionsHook();
 
 	const {
@@ -88,13 +88,13 @@ export const Assessment = observer(() => {
 		}
 	};
 
-	const renderNextButton = () => (
+	const renderNextButton = (): JSX.Element => (
 		<NextQuestionBtn type="button" onClick={() => nextQuestion()}>
 			{nextQuestionText}
 		</NextQuestionBtn>
 	);
 
-	const renderQuestion = () => {
+	const renderQuestion = (): JSX.Element => {
 		return (
 			<MCQQuestionSection>
 				<QuestionAndOptions>

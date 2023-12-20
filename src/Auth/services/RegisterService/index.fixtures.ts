@@ -1,6 +1,9 @@
 import { resolveWithTimeout } from "../../../Common/utils/TestUtils";
 
-import { RegisterAPIReqObj, RegisterAPISuccessRes } from "../../stores/types";
+import {
+	RegisterAPIReqObj,
+	RegisterAPISuccessRes,
+} from "../../stores/Types/registerTypes";
 import registerFixtureResponse from "../../fixtures/getRegisterRegister.json";
 
 import { RegisterServiceType } from "./index";

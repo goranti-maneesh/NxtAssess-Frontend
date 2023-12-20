@@ -15,7 +15,7 @@ import {
 	LoaderAssessmentContainer,
 } from "./styledComponents";
 
-export const AssessmentRoute = observer(() => {
+export const AssessmentRoute = observer((): JSX.Element => {
 	const mcqQuestionSHook = useMcqQuestionsHook();
 
 	const navigate = useNavigate()
@@ -36,9 +36,9 @@ export const AssessmentRoute = observer(() => {
 		}
 	}, []);
 
-	const renderSuccessView = () => <Assessment />;
+	const renderSuccessView = (): JSX.Element => <Assessment />;
 
-	const renderLoader = () => (
+	const renderLoader = (): JSX.Element => (
 		<LoaderAssessmentContainer>
 			<Loader color="#263868" height={50} width={50} secondaryColor="" />
 		</LoaderAssessmentContainer>

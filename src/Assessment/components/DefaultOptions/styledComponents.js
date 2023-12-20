@@ -4,7 +4,11 @@ import styled from "styled-components";
 export const DefaultOptionLiElement = styled.li`
 	${tw`w-380px h-64px mr-12 mb-8`}
 
-	@media(max-width: 768px) {
+	@media (max-width: 992px) {
+		${tw`w-280px h-56px`}
+	}
+
+	@media (max-width: 768px) {
 		${tw`w-280px h-56px mb-4 mr-8`}
 	}
 `;
@@ -14,7 +18,7 @@ export const DefaultOptionBtn = styled.button`
 
 	${(props) => props.isSelected && tw`bg-WaikawaGray text-CatskillWhite`}
 
-	@media(max-width: 768px) {
+	@media(max-width: 992px) {
 		${tw`text-fs16_lh24 p-4`}
 	}
 `;

@@ -1,5 +1,3 @@
-import React from "react";
-
 import { InputFieldPropsTypes } from "../../types";
 
 import {
@@ -9,7 +7,7 @@ import {
 	StarIcon,
 } from "./styledComponents";
 
-export const InputField = (props: InputFieldPropsTypes) => {
+export const InputField = (props: InputFieldPropsTypes): JSX.Element => {
 	const { requiredProps } = props;
 
 	const { type, onChangeMethod, labelText, id, placeholder, value } =

@@ -5,7 +5,7 @@ import { setJwtToken } from "../../../Common/utils/StorageUtils";
 import { LoginService } from "../../services/LoginService/index.api";
 import { LoginServiceType } from "../../services/LoginService/index";
 
-import { LoginFailureTypes, LoginSuccessResTypes } from "../types";
+import { LoginFailureTypes, LoginSuccessResTypes } from "../Types/loginTypes";
 
 export class LoginStore {
 	constraint: string;

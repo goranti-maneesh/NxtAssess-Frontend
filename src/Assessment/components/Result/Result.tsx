@@ -12,6 +12,8 @@ import {
 	didnotCompleteWithInTimeText,
 	assessmentCompletedImg,
 	assessmentTimeUpImg,
+	homeRoute,
+	assessmentRoute,
 } from "../../../Common/constants";
 
 import { useMcqQuestionsHook } from "../../hooks/useMcqQuestionsHooks";
@@ -47,16 +49,16 @@ export const Result = () => {
 
 	useEffect(() => {
 		if (wholeTimerSecs === 600 && noOfAnsweredQuestions === 0) {
-			navigate("/", { replace: true });
+			navigate(homeRoute, { replace: true });
 		}
 	}, []);
 
-	const onClcikReattemptBtn = () => {
+	const onClcikReattemptBtn = (): void => {
 		reattemptAssessment(navigate);
-		navigate("/assessment", { replace: true });
+		navigate(assessmentRoute, { replace: true });
 	};
 
-	const renderAssessmentCompletePage = () => {
+	const renderAssessmentCompletePage = (): JSX.Element => {
 		return (
 			<ResultPageContainer>
 				<AssessmentCompleteImg src={assessmentCompletedImg} />
@@ -76,7 +78,7 @@ export const Result = () => {
 		);
 	};
 
-	const renderTimeUpAssessmentPage = () => {
+	const renderTimeUpAssessmentPage = (): JSX.Element => {
 		return (
 			<ResultPageContainer>
 				<AssessmentTimeUpImg src={assessmentTimeUpImg} />

@@ -1,5 +1,9 @@
 import { makeAutoObservable } from "mobx";
-import { answeredQuestionsText, constraints } from "../../../Common/constants";
+import {
+	answeredQuestionsText,
+	constraints,
+	resultRoute,
+} from "../../../Common/constants";
 
 import { McqQuestionsServiceTypes } from "../../services/McqQuestionsService";
 
@@ -76,7 +80,7 @@ export class McqQuestionsStore {
 
 		clearInterval(this.uniqueId);
 
-		this.navigate("/result", { replace: true });
+		this.navigate(resultRoute, { replace: true });
 
 		const incorrectAnswers = this.APIResponseData.questions.filter(
 			(eachQuestion) => {
@@ -191,7 +195,7 @@ export class McqQuestionsStore {
 		this.questionNumsArray = numbersArr;
 		this.noOfUnansweredQuestions = response.total;
 		this.noOfAnsweredQuestions = 0;
-		this.wholeTimerSecs = 600;
+		this.wholeTimerSecs = 6;
 		this.score = 0;
 
 		this.startTimer();

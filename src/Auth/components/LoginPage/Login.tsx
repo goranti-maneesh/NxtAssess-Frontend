@@ -7,6 +7,7 @@ import {
 	nxtText,
 	assessText,
 	loginBtnText,
+	registerRoute,
 } from "../../../Common/constants";
 import Loader from "../../../Common/components/Loader";
 import NxtAssessLogo from "../../../Common/components/NxtAssessLogo";
@@ -18,11 +19,11 @@ import {
 	RegisterPageForm,
 	RegisterPageMainContainer,
 	SignUpBtn,
-} from "../../../Register/components/RegisterPage/styledComponents";
+} from "../RegisterPage/styledComponents";
 
-import { InputFieldPropsTypes } from "../../stores/types";
+import { InputFieldPropsTypes } from "../../stores/Types/loginTypes";
 
-export const LoginPage = (props: InputFieldPropsTypes) => {
+export const LoginPage = (props: InputFieldPropsTypes): JSX.Element => {
 	const {
 		onSubmitLoginForm,
 		usernameProps,
@@ -47,22 +48,21 @@ export const LoginPage = (props: InputFieldPropsTypes) => {
 		);
 	};
 
-	const renderLoginPageForm = () => {
+	const renderLoginPageForm = (): JSX.Element => {
 		return (
 			<RegisterPageForm onSubmit={onSubmitForm}>
 				<InputField requiredProps={usernameProps} />
 				<InputField requiredProps={passwordProps} />
 				{errorMsg ? <ErrorText>{errorMsg}</ErrorText> : null}
 				<SignUpBtn type="submit">
-					{constraint === "LOADING" ? (
-						renderLoader()
-					) : (
-						loginBtnText
-					)}
+					{constraint === "LOADING" ? renderLoader() : loginBtnText}
 				</SignUpBtn>
 				<AlreadyHaveAccText>
 					{newToNxtAssessText} -
-					<LinkComponent to="/register"> Click here</LinkComponent>
+					<LinkComponent to={registerRoute}>
+						{" "}
+						Click here
+					</LinkComponent>
 				</AlreadyHaveAccText>
 			</RegisterPageForm>
 		);

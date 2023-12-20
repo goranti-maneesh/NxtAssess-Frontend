@@ -2,7 +2,7 @@ import {
 	UserDetailsTypes,
 	LoginSuccessResTypes,
 	LoginFailureTypes,
-} from "../../stores/types";
+} from "../../stores/Types/loginTypes";
 
 export interface LoginServiceType {
 	fetchLoginAPI: (

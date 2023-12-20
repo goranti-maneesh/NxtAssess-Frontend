@@ -7,6 +7,7 @@ import {
 	homePageImg,
 	instructionsText,
 	startAssessmentText,
+	assessmentRoute,
 } from "../../../Common/constants";
 
 import {
@@ -21,17 +22,17 @@ import {
 	InstructionPointValue,
 	StartAssessmentBtn,
 	HomePageAssessmentImg,
-	Instructions
+	Instructions,
 } from "./styledComponents";
 
-export const Home = () => {
+export const Home = (): JSX.Element => {
 	const navigate = useNavigate();
 
-	const onClickStartAssessment = () => {
-		navigate("/assessment");
+	const onClickStartAssessment = (): void => {
+		navigate(assessmentRoute);
 	};
 
-	const renderInstructions = () => {
+	const renderInstructions = (): JSX.Element => {
 		return (
 			<Instructions>
 				{homePageInstructionPoints.map((eachPoint) => (

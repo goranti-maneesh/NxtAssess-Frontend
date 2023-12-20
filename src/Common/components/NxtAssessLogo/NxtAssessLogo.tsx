@@ -3,7 +3,7 @@ import { NxtAssessLogoPropsTypes } from '../../types'
 
 import {NxtAssessLogoContainer, NxtAssessImg, NxtAssessText, NxtText} from './styledComponents'
 
-export const NxtAssessLogo = (props: NxtAssessLogoPropsTypes) => {
+export const NxtAssessLogo = (props: NxtAssessLogoPropsTypes): JSX.Element => {
     const {nxtAssessImg, textColor} = props
     return(
         <NxtAssessLogoContainer>

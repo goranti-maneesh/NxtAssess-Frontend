@@ -5,7 +5,7 @@ import { DefaultOptionLiElement, DefaultOptionBtn } from "./styledComponents";
 export const DefaultOptions = (props: DefaultAndImgOptionsPropsTypes) => {
 	const { eachOption, selectOption, selectedOption } = props;
 
-	const onClickOption = (id: string) => {
+	const onClickOption = (id: string): void => {
 		selectOption(id);
 	};
 

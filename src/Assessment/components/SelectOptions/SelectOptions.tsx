@@ -3,10 +3,10 @@ import { SelectOptionsPropsTypes } from "../../stores/types";
 
 import { SelectElement, OptionElement } from "./styledComponents";
 
-export const SelectOptions = (props: SelectOptionsPropsTypes) => {
+export const SelectOptions = (props: SelectOptionsPropsTypes): JSX.Element => {
 	const { options, selectOption, selectedOption } = props;
 
-	const onClickOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
+	const onClickOption = (event: React.ChangeEvent<HTMLSelectElement>): void => {
 		selectOption(event.target.value);
 	};
 

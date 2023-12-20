@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { NxtAssessLightImg, logoutText } from "../../constants";
+import { NxtAssessLightImg, logoutText, loginRoute } from "../../constants";
 import { removeJwtToken } from "../../utils/StorageUtils";
 
 import NxtAssessLogo from "../NxtAssessLogo";
@@ -11,12 +11,12 @@ import {
 	LogoutBtn,
 } from "./styledComponents";
 
-export const Header = () => {
+export const Header = (): JSX.Element => {
 	const navigate = useNavigate();
 
-	const onClickLogoutBtn = () => {
+	const onClickLogoutBtn = (): void => {
 		removeJwtToken();
-		navigate("/login", { replace: true });
+		navigate(loginRoute, { replace: true });
 	};
 
 	return (

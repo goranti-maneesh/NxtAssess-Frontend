@@ -31,7 +31,7 @@ import {
 	SubmitTestBtn,
 } from "./styledComponents";
 
-export const MCQDetails = observer(() => {
+export const MCQDetails = observer((): JSX.Element => {
 	const mcqQuestionsHook = useMcqQuestionsHook();
 
 	const navigate = useNavigate();
@@ -47,11 +47,11 @@ export const MCQDetails = observer(() => {
 		completeAssessment,
 	} = mcqQuestionsHook;
 
-	const submitTest = () => {
+	const submitTest = (): void => {
 		completeAssessment();
 	};
 
-	const renderQuestionNumbers = () => {
+	const renderQuestionNumbers = (): JSX.Element[] => {
 		return questionNumsArray.map((eachQuestionNum) => (
 			<EachNumberLiElement key={eachQuestionNum.id}>
 				<EachNumberBtn

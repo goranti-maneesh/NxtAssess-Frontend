@@ -2,7 +2,7 @@ import {
 	RegisterAPIReqObj,
 	RegisterAPISuccessRes,
 	RegisterAPIFailureRes,
-} from "../../stores/types";
+} from "../../stores/Types/registerTypes";
 
 import { RegisterServiceType } from "./index";
 

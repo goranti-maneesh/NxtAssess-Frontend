@@ -14,23 +14,31 @@ export const AssessmentContainer = styled.div`
 export const MCQQuestionSection = styled.div`
 	${tw`bg-white shadow-assessmentPage p-12 h-full max-h-837px flex flex-col justify-between mr-8 max-w-928px w-70per `}
 
-	@media(max-width: 768px) {
-		${tw`w-312px  pt-6 pl-4 pr-4 pb-12 order-1 m-0 mt-4`}
+	@media(max-width: 992px) {
+		${tw`w-50per`}
+	}
+
+	@media (max-width: 768px) {
+		${tw`w-312px pt-6 pl-4 pr-4 pb-12 order-1 m-0 mt-4`}
 	}
 `;
 
 export const MCQDetailsSection = styled.div`
-	${tw`w-30per max-w-416px h-full`}
+	${tw`max-w-416px h-full`}
 
-	@media(max-width: 768px) {
-		${tw`order-none w-312px`}
+	@media(max-width: 992px) {
+		${tw`max-w-416px`}
+	}
+
+	@media (max-width: 768px) {
+		${tw`order-none max-w-312px`}
 	}
 `;
 
 export const QuestionText = styled.h1`
 	${tw`text-ChathamsBlue text-fs20_lh30 font-medium`}
 
-	@media(max-width: 768px) {
+	@media(max-width: 992px) {
 		${tw`text-fs16_lh24`}
 	}
 `;

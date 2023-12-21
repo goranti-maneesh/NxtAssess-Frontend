@@ -1,8 +1,9 @@
-export const homeRoute = "/"
-export const loginRoute = "/login"
-export const registerRoute = "/register"
-export const assessmentRoute = "/assessment"
-export const resultRoute = "/result"
+export const homeRoute = "/";
+export const loginRoute = "/login";
+export const registerRoute = "/register";
+export const assessmentRoute = "/assessment";
+export const resultRoute = "/result";
+export const notFoundRoute = "not-found"
 
 export const nxtText = "NXT";
 export const assessText = "Assess";
@@ -27,8 +28,12 @@ export const reattemptText = "Reattempt";
 export const timeUpText = "Time is up";
 export const didnotCompleteWithInTimeText =
 	"You did not complete the assessment within the time.";
-export const pageNotFoundText= "Page Not Found"
-export const pageNotFoundDescripiton = "We are sorry, the page you requested could not be found"
+export const errorViewHeading = "Oops! Something went wrong";
+export const errorViewDescription = "We are having some trouble";
+export const retryBtnText = "Retry";
+export const notFoundHeading = "Page Not Found";
+export const notFounDescription =
+	"We are sorry, the page you requested could not be found";
 
 export const NxtAssessImg =
 	"https://res.cloudinary.com/degjdup40/image/upload/v1701530848/image_28_Traced_lty02g.png";
@@ -40,8 +45,6 @@ export const assessmentCompletedImg =
 	"https://res.cloudinary.com/degjdup40/image/upload/v1702832764/Asset_2_1_jlbtle.png";
 export const assessmentTimeUpImg =
 	"https://res.cloudinary.com/degjdup40/image/upload/v1702832754/calender_1_1_xkqfvj.png";
-export const notFoundImg =
-	"https://res.cloudinary.com/degjdup40/image/upload/v1702914100/Group_7504_qy16re.png";
 
 export const constraints = {
 	initial: "INITIAL",

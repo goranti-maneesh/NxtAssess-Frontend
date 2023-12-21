@@ -29,7 +29,7 @@ export const LoginPage = (props: InputFieldPropsTypes): JSX.Element => {
 		usernameProps,
 		passwordProps,
 		errorMsg,
-		constraint,
+		apiStatus,
 	} = props;
 
 	const onSubmitForm = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -55,7 +55,7 @@ export const LoginPage = (props: InputFieldPropsTypes): JSX.Element => {
 				<InputField requiredProps={passwordProps} />
 				{errorMsg ? <ErrorText>{errorMsg}</ErrorText> : null}
 				<SignUpBtn type="submit">
-					{constraint === "LOADING" ? renderLoader() : loginBtnText}
+					{apiStatus === "LOADING" ? renderLoader() : loginBtnText}
 				</SignUpBtn>
 				<AlreadyHaveAccText>
 					{newToNxtAssessText} -

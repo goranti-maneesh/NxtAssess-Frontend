@@ -10,7 +10,7 @@ import {
 } from "../Types/registerTypes";
 
 export class RegisterStore {
-	constraint: string;
+	apiStatus: string;
 	name: string;
 	username: string;
 	password: string;
@@ -22,7 +22,7 @@ export class RegisterStore {
 	constructor(registerStoreInstance: RegisterServiceType) {
 		makeAutoObservable(this);
 
-		this.constraint = constraints.initial;
+		this.apiStatus = constraints.initial;
 		this.name = "";
 		this.username = "";
 		this.password = "";
@@ -62,25 +62,28 @@ export class RegisterStore {
 	};
 
 	fetchRegisterAPI = async () => {
-		this.constraint = constraints.loading;
+		this.apiStatus = constraints.loading;
+		try {
+			const userDetails = {
+				username: this.username,
+				name: this.name,
+				password: this.password,
+				confirm_password: this.confirmPassword,
+			};
 
-		const userDetails = {
-			username: this.username,
-			name: this.name,
-			password: this.password,
-			confirm_password: this.confirmPassword,
-		};
+			const response = await this.registerAPIService.fetchRegisterAPI(
+				userDetails,
+			);
 
-		const response = await this.registerAPIService.fetchRegisterAPI(
-			userDetails,
-		);
+			if ("message" in response) {
+				this.onSuccessRegisterAPI(response);
+			} else {
+				this.onFailureRegisterAPI(response);
+			}
 
-		if ("message" in response) {
-			this.onSuccessRegisterAPI(response);
-		} else {
-			this.onFailureRegisterAPI(response);
+			this.apiStatus = constraints.success;
+		} catch {
+			this.apiStatus = constraints.failure;
 		}
-
-		this.constraint = constraints.success;
 	};
 }

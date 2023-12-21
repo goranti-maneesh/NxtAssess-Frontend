@@ -1,37 +1,68 @@
 {
-    "total": 10,
-    "questions": [
-      {
-        "id": "a1",
-        "options_type": "DEFAULT",
-        "question_text": "React JS is developed by?",
-        "options": [
-          {
-            "id": "1",
-            "text": "Facebook",
-            "is_correct": "true",
-            "image_url": "https://assets.ccbp.in/frontend/react-js/nxt-assess/flex-start-option-img.png"
-          },
-          {
-            "id": "2",
-            "text": "Twitter",
-            "is_correct": "false",
-            "image_url": "https://assets.ccbp.in/frontend/react-js/nxt-assess/flex-start-option-img.png"
-          },
-          {
-            "id": "3",
-            "text": "Wattsup",
-            "is_correct": "false",
-            "image_url": "https://assets.ccbp.in/frontend/react-js/nxt-assess/flex-start-option-img.png"
-          },
-          {
-            "id": "4",
-            "text": "Instagram",
-            "is_correct": "false",
-            "image_url": "https://assets.ccbp.in/frontend/react-js/nxt-assess/flex-start-option-img.png"
-          }
-        ]
-      }
-    ],
-    "responseStatus": false
-  }
+	"total": 2,
+	"questions": [
+		{
+			"id": "a1",
+			"options_type": "DEFAULT",
+			"question_text": "React JS is developed by?",
+			"options": [
+				{
+					"id": "1",
+					"text": "Facebook",
+					"is_correct": "true",
+					"image_url": "https://assets.ccbp.in/frontend/react-js/nxt-assess/flex-start-option-img.png"
+				},
+				{
+					"id": "2",
+					"text": "Twitter",
+					"is_correct": "false",
+					"image_url": "https://assets.ccbp.in/frontend/react-js/nxt-assess/flex-start-option-img.png"
+				},
+				{
+					"id": "3",
+					"text": "Wattsup",
+					"is_correct": "false",
+					"image_url": "https://assets.ccbp.in/frontend/react-js/nxt-assess/flex-start-option-img.png"
+				},
+				{
+					"id": "4",
+					"text": "Instagram",
+					"is_correct": "false",
+					"image_url": "https://assets.ccbp.in/frontend/react-js/nxt-assess/flex-start-option-img.png"
+				}
+			]
+		},
+		{
+			"id": "a1",
+			"options_type": "DEFAULT",
+			"question_text": "React JS is developed by?",
+			"options": [
+				{
+					"id": "1",
+					"text": "Facebook",
+					"is_correct": "true",
+					"image_url": "https://assets.ccbp.in/frontend/react-js/nxt-assess/flex-start-option-img.png"
+				},
+				{
+					"id": "2",
+					"text": "Twitter",
+					"is_correct": "false",
+					"image_url": "https://assets.ccbp.in/frontend/react-js/nxt-assess/flex-start-option-img.png"
+				},
+				{
+					"id": "3",
+					"text": "Wattsup",
+					"is_correct": "false",
+					"image_url": "https://assets.ccbp.in/frontend/react-js/nxt-assess/flex-start-option-img.png"
+				},
+				{
+					"id": "4",
+					"text": "Instagram",
+					"is_correct": "false",
+					"image_url": "https://assets.ccbp.in/frontend/react-js/nxt-assess/flex-start-option-img.png"
+				}
+			]
+		}
+	],
+	"responseStatus": false
+}

@@ -71,11 +71,11 @@ export class McqQuestionsStore {
 		this.navigate = {};
 	}
 
-	startAssessment = () => {
+	startAssessment = (): void => {
 		this.isAssessmentStarted = true;
 	};
 
-	completeAssessment = () => {
+	completeAssessment = (): void => {
 		this.isAssessmentStarted = false;
 
 		clearInterval(this.uniqueId);
@@ -101,22 +101,22 @@ export class McqQuestionsStore {
 		this.score = this.APIResponseData.total - incorrectAnswers.length;
 	};
 
-	setNavigateMethod = (navigate: any) => {
+	setNavigateMethod = (navigate: any): void => {
 		this.navigate = navigate;
 	};
 
-	startTimer = () => {
+	startTimer = (): void => {
 		this.uniqueId = setInterval(this.changeTimer, 1000);
 	};
 
-	convertTimerValueToString = (time: number) => {
+	convertTimerValueToString = (time: number): string => {
 		if (time < 10) {
 			return `0${time}`;
 		}
-		return time;
+		return `${time}`;
 	};
 
-	changeTimer = () => {
+	changeTimer = (): void => {
 		this.wholeTimerSecs -= 1;
 
 		const hours = this.convertTimerValueToString(
@@ -136,7 +136,7 @@ export class McqQuestionsStore {
 		this.timerText = `${hours}:${minutes}:${seconds}`;
 	};
 
-	nextQuestion = () => {
+	nextQuestion = (): void => {
 		if (this.noOfAnsweredQuestions === this.APIResponseData.total - 1) {
 			this.isLastQuestion = true;
 		}
@@ -149,7 +149,7 @@ export class McqQuestionsStore {
 		}
 	};
 
-	selectQuestion = (value: number) => {
+	selectQuestion = (value: number): void => {
 		this.index = value - 1;
 		this.existingQuestion = this.APIResponseData.questions[value - 1];
 
@@ -158,7 +158,7 @@ export class McqQuestionsStore {
 		}
 	};
 
-	selectOption = (id: string) => {
+	selectOption = (id: string): void => {
 		this.APIResponseData.questions[this.index].userSelectedOptionId = id;
 		this.selectedOption = id;
 		if (!this.questionNumsArray[this.index].isAnswered) {
@@ -168,12 +168,12 @@ export class McqQuestionsStore {
 		this.questionNumsArray[this.index].isAnswered = true;
 	};
 
-	reattemptAssessment = (navigate: any) => {
+	reattemptAssessment = (navigate: any): void => {
 		this.fetchData();
 		this.navigate = navigate;
 	};
 
-	onSuccessAPI = (response: FetchResDataTypes) => {
+	onSuccessAPI = (response: FetchResDataTypes): void => {
 		const updatedResponse = response.questions.map(
 			(eachQuestion) => new McqQuestionsModel(eachQuestion),
 		);
@@ -201,19 +201,22 @@ export class McqQuestionsStore {
 		this.startTimer();
 	};
 
-	onFailureAPI = () => {
+	onFailureAPI = (): void => {
 		this.apiStatus = constraints.failure;
 	};
 
-	fetchData = async () => {
+	fetchData = async (): Promise<void> => {
 		this.apiStatus = constraints.loading;
+		try {
+			const response = await this.APIService.fetchMcqQuestionsData();
 
-		const response = await this.APIService.fetchMcqQuestionsData();
-
-		if ("questions" in response) {
-			this.onSuccessAPI(response);
-		} else {
-			this.onFailureAPI();
+			if ("questions" in response) {
+				this.onSuccessAPI(response);
+			} else {
+				this.onFailureAPI();
+			}
+		} catch {
+			this.apiStatus = constraints.failure;
 		}
 	};
 }

@@ -2,9 +2,10 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react";
 
-import { homeRoute } from "../../../Common/constants";
+import { constraints, homeRoute } from "../../../Common/constants";
 
 import { getJwtToken } from "../../../Common/utils/StorageUtils";
+import ErrorView from "../../../Common/components/ErrorView";
 
 import LoginPage from "../../components/LoginPage";
 import { useLoginHook } from "../../hooks/useLoginHooks";
@@ -18,7 +19,7 @@ export const LoginPageRoute = observer((): JSX.Element => {
 	const navigate = useNavigate();
 
 	const {
-		constraint,
+		apiStatus,
 		username,
 		password,
 		errorMsg,
@@ -26,13 +27,13 @@ export const LoginPageRoute = observer((): JSX.Element => {
 		responseStatus,
 	} = loginHook;
 
-	const onSubmitLoginForm = (): void => {
+	const onSubmitLoginForm = async (): Promise<void> => {
 		if (username === "" || password === "") {
 			const { setErrorMsg } = loginHook;
 
 			setErrorMsg("Enter valid inputs");
 		} else {
-			fetchLoginApi();
+			fetchLoginApi(navigate);
 		}
 	};
 
@@ -53,14 +54,8 @@ export const LoginPageRoute = observer((): JSX.Element => {
 	};
 
 	useEffect(() => {
-		if (responseStatus) {
-			navigate(homeRoute, { replace: true });
-		}
-	}, [responseStatus]);
-
-	useEffect(() => {
 		if (getJwtToken() !== null) {
-			navigate(homeRoute, { replace: true });
+			navigate(homeRoute);
 		}
 	}, []);
 
@@ -82,15 +77,36 @@ export const LoginPageRoute = observer((): JSX.Element => {
 		labelText: "PASSWORD",
 	};
 
+	const renderLoginPage = (): JSX.Element => (
+		<LoginPage
+			onSubmitLoginForm={onSubmitLoginForm}
+			usernameProps={usernameProps}
+			passwordProps={passwordProps}
+			apiStatus={apiStatus}
+			errorMsg={errorMsg}
+		/>
+	);
+
+	const retryOnLoginAPI = async (): Promise<void> => {
+		await fetchLoginApi(navigate);
+	};
+
+	const renderFailureView = (): JSX.Element => (
+		<ErrorView fetchMethod={retryOnLoginAPI} />
+	);
+
+	const renderAllViews = (): JSX.Element => {
+		switch (apiStatus) {
+			case constraints.failure:
+				return renderFailureView();
+			default:
+				return renderLoginPage();
+		}
+	};
+
 	return (
 		<RegisterPageRouteContainer>
-			<LoginPage
-				onSubmitLoginForm={onSubmitLoginForm}
-				usernameProps={usernameProps}
-				passwordProps={passwordProps}
-				constraint={constraint}
-				errorMsg={errorMsg}
-			/>
+			{renderAllViews()}
 		</RegisterPageRouteContainer>
 	);
 });

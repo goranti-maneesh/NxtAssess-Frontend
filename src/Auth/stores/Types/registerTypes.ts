@@ -40,7 +40,7 @@ export interface RegisterPageProps {
 	passwordProps: InputLabelProps;
 	confirmPasswordProps: InputLabelProps;
 	errorMsg: string;
-	constraint: string;
+	apiStatus: string;
 }
 
 export interface InputPropsTypes {

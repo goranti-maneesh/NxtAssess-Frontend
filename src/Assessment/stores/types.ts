@@ -62,7 +62,7 @@ export interface assessmentPropsTypes {
 	timerText: string;
 	noOfAnsweredQuestions: number;
 	noOfUnansweredQuestions: number;
-	constraint: string;
+	apiStatus: string;
 	selectedOption: string;
 	questionNumsArray: Array<questionNumArray>;
 	startAssessment: () => void;

@@ -2,7 +2,7 @@ import { useContext, createContext, ReactNode } from "react";
 
 import { McqQuestionsStore } from "../stores/McqQuestionsStore/McqQuestionsStore";
 
-import { McqQuestionsService } from "../services/McqQuestionsService/index.api";
+import { McqQuestionsService } from "../../Common";
 
 const mcqQuestionsServiceInstance = new McqQuestionsService();
 

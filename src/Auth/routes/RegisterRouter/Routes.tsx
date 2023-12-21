@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react";
 
-import { loginRoute } from "../../../Common/constants";
+import { loginRoute, constraints } from "../../../Common/constants";
+import ErrorView from "../../../Common/components/ErrorView";
 
 import RegisterPage from "../../components/RegisterPage";
 import { InputLabelProps } from "../../stores/Types/registerTypes";
@@ -22,11 +23,12 @@ export const RegisterPageRoute = observer((): JSX.Element => {
 		confirmPassword,
 		errorMsg,
 		responseStatus,
-		constraint,
+		apiStatus,
+		fetchRegisterAPI,
 	} = registerHook;
 
 	const onClickSignupForm = (): void => {
-		const { setErrorMsg, fetchRegisterAPI } = registerHook;
+		const { setErrorMsg } = registerHook;
 
 		if (
 			username === "" ||
@@ -112,17 +114,34 @@ export const RegisterPageRoute = observer((): JSX.Element => {
 		}
 	}, [responseStatus]);
 
+	const renderRegisterPage = (): JSX.Element => (
+		<RegisterPage
+			onClickSignupForm={onClickSignupForm}
+			usernameProps={usernameProps}
+			nameProps={nameProps}
+			passwordProps={passwordProps}
+			confirmPasswordProps={confirmPasswordProps}
+			errorMsg={errorMsg}
+			apiStatus={apiStatus}
+		/>
+	);
+
+	const renderFailureView = (): JSX.Element => (
+		<ErrorView fetchMethod={fetchRegisterAPI} />
+	);
+
+	const renderAllViews = (): JSX.Element => {
+		switch (apiStatus) {
+			case constraints.failure:
+				return renderFailureView();
+			default:
+				return renderRegisterPage();
+		}
+	};
+
 	return (
 		<RegisterPageRouteContainer>
-			<RegisterPage
-				onClickSignupForm={onClickSignupForm}
-				usernameProps={usernameProps}
-				nameProps={nameProps}
-				passwordProps={passwordProps}
-				confirmPasswordProps={confirmPasswordProps}
-				errorMsg={errorMsg}
-				constraint={constraint}
-			/>
+			{renderAllViews()}
 		</RegisterPageRouteContainer>
 	);
 });

@@ -35,7 +35,7 @@ export const RegisterPage = (props: RegisterPageProps): JSX.Element => {
 		passwordProps,
 		confirmPasswordProps,
 		errorMsg,
-		constraint,
+		apiStatus,
 	} = props;
 
 	const signupForm = (event: React.FormEvent<HTMLInputElement>): void => {
@@ -63,7 +63,7 @@ export const RegisterPage = (props: RegisterPageProps): JSX.Element => {
 				<InputField requiredProps={confirmPasswordProps} />
 				{errorMsg ? <ErrorText>{errorMsg}</ErrorText> : null}
 				<SignUpBtn type="submit">
-					{constraint === "LOADING" ? (
+					{apiStatus === "LOADING" ? (
 						<LoaderComponent />
 					) : (
 						signUpBtnText

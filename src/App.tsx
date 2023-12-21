@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 import {
 	homeRoute,
@@ -6,6 +6,7 @@ import {
 	registerRoute,
 	assessmentRoute,
 	resultRoute,
+	notFoundRoute,
 } from "./Common/constants";
 
 import ProtectedRoute from "./Common/components/ProtectedRoute";
@@ -14,6 +15,7 @@ import LoginPageRoute from "./Auth/routes/LoginRoute";
 import HomeRoute from "./Assessment/components/Home";
 import AssessmentRoute from "./Assessment/routes";
 import ResultRoute from "./Assessment/components/Result";
+import NotFound from "./Common/components/NotFound";
 
 import { LoginHookContext } from "./Auth/hooks/useLoginHooks";
 import { RegisterHookContext } from "./Auth/hooks/useRegisterHooks";
@@ -48,6 +50,10 @@ const App = (): JSX.Element => {
 									element={<ResultRoute />}
 								/>
 							</Route>
+							<Route
+								path={notFoundRoute}
+								element={<NotFound />}
+							/>
 						</Routes>
 					</McqQuestionsHookContext>
 				</RegisterHookContext>

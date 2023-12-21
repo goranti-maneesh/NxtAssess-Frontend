@@ -14,11 +14,12 @@ import {
 	AssessmentRouteCantainer,
 	LoaderAssessmentContainer,
 } from "./styledComponents";
+import ErrorView from "../../Common/components/ErrorView";
 
 export const AssessmentRoute = observer((): JSX.Element => {
 	const mcqQuestionSHook = useMcqQuestionsHook();
 
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	const {
 		fetchData,
@@ -26,13 +27,13 @@ export const AssessmentRoute = observer((): JSX.Element => {
 		existingQuestion,
 		nextQuestion,
 		apiStatus,
-		setNavigateMethod
+		setNavigateMethod,
 	} = mcqQuestionSHook;
 
 	useEffect(() => {
 		if (apiStatus === constraints.initial) {
 			fetchData();
-			setNavigateMethod(navigate)
+			setNavigateMethod(navigate);
 		}
 	}, []);
 
@@ -44,12 +45,18 @@ export const AssessmentRoute = observer((): JSX.Element => {
 		</LoaderAssessmentContainer>
 	);
 
+	const renderFailure = (): JSX.Element => (
+		<ErrorView fetchMethod={fetchData} />
+	);
+
 	const assessmentRouteViews = (): JSX.Element | null => {
 		switch (apiStatus) {
 			case constraints.success:
 				return renderSuccessView();
 			case constraints.loading:
 				return renderLoader();
+			case constraints.failure:
+				return renderFailure();
 			default:
 				return null;
 		}

@@ -34,7 +34,7 @@ import {
 	DidNotCompleteInTimeText,
 } from "./styledComponents";
 
-export const Result = () => {
+export const Result = (): JSX.Element => {
 	const mcqQuestionsHook = useMcqQuestionsHook();
 
 	const navigate = useNavigate();

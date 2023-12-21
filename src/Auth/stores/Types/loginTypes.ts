@@ -23,7 +23,7 @@ export interface InputFieldPropsTypes {
 	usernameProps: InputPropsTypes;
 	passwordProps: InputPropsTypes;
 	errorMsg: string;
-	constraint: string;
+	apiStatus: string;
 }
 
 export interface UserDetailsTypes {

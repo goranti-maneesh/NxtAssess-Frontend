@@ -1,6 +1,6 @@
 import { useContext, createContext, ReactNode } from "react";
 
-import { LoginService } from "../services/LoginService/index.api";
+import { LoginService } from "../../Common";
 import { LoginStore } from "../stores/LoginStore/LoginStore";
 
 const loginServiceInstance = new LoginService();

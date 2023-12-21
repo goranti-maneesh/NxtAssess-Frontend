@@ -1,6 +1,7 @@
 import { makeAutoObservable } from "mobx";
-import { constraints } from "../../../Common/constants";
-import { setJwtToken } from "../../../Common/utils/StorageUtils";
+
+import { constraints, homeRoute } from "../../../Common/constants";
+import { setJwtToken, getJwtToken } from "../../../Common/utils/StorageUtils";
 
 import { LoginService } from "../../services/LoginService/index.api";
 import { LoginServiceType } from "../../services/LoginService/index";
@@ -8,7 +9,7 @@ import { LoginServiceType } from "../../services/LoginService/index";
 import { LoginFailureTypes, LoginSuccessResTypes } from "../Types/loginTypes";
 
 export class LoginStore {
-	constraint: string;
+	apiStatus: string;
 	responseStatus: boolean;
 	username: string;
 	password: string;
@@ -17,7 +18,7 @@ export class LoginStore {
 
 	constructor(loginServiceInstance: LoginService) {
 		makeAutoObservable(this);
-		this.constraint = constraints.initial;
+		this.apiStatus = constraints.initial;
 		this.responseStatus = false;
 		this.username = "";
 		this.password = "";
@@ -38,31 +39,36 @@ export class LoginStore {
 	};
 
 	onSuccessLoginApi = (response: LoginSuccessResTypes) => {
-		setJwtToken(response.jwt_token);
 		this.responseStatus = response.responseStatus;
+		setJwtToken(response.jwt_token);
 	};
 
 	onFailureLoginApi = (error_msg: string) => {
 		this.setErrorMsg(error_msg);
 	};
 
-	fetchLoginApi = async () => {
-		this.constraint = constraints.loading;
+	fetchLoginApi = async (navigate: any) => {
+		this.apiStatus = constraints.loading;
 
 		const userDetails = {
 			username: this.username,
 			password: this.password,
 		};
 
-		const loginResponse: LoginSuccessResTypes | LoginFailureTypes =
-			await this.loginApiInstance.fetchLoginAPI(userDetails);
+		try {
+			const loginResponse: LoginSuccessResTypes | LoginFailureTypes =
+				await this.loginApiInstance.fetchLoginAPI(userDetails);
 
-		if ("jwt_token" in loginResponse) {
-			this.onSuccessLoginApi(loginResponse);
-		} else {
-			this.setErrorMsg(loginResponse.error_msg);
+			if ("jwt_token" in loginResponse) {
+				this.onSuccessLoginApi(loginResponse);
+				navigate(homeRoute, { replace: true });
+			} else {
+				this.setErrorMsg(loginResponse.error_msg);
+			}
+
+			this.apiStatus = constraints.success;
+		} catch {
+			this.apiStatus = constraints.failure;
 		}
-
-		this.constraint = constraints.success;
 	};
 }

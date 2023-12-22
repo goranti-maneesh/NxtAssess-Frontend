@@ -1,10 +1,8 @@
 import {
-    errorViewHeading,
+	errorViewHeading,
 	errorViewDescription,
 	retryBtnText,
 } from "../../constants";
-
-import WrapperComponent from "../WrapperComponent";
 
 import {
 	ErrorViewContainer,
@@ -15,14 +13,12 @@ import {
 
 export const ErrorView = (props: { fetchMethod: () => Promise<void> }) => {
 	return (
-		<WrapperComponent>
-			<ErrorViewContainer>
-				<ErrorHeading>{errorViewHeading}</ErrorHeading>
-				<ErrorDescription>{errorViewDescription}</ErrorDescription>
-				<RetryButton type="button" onClick={props.fetchMethod}>
-					{retryBtnText}
-				</RetryButton>
-			</ErrorViewContainer>
-		</WrapperComponent>
+		<ErrorViewContainer>
+			<ErrorHeading>{errorViewHeading}</ErrorHeading>
+			<ErrorDescription>{errorViewDescription}</ErrorDescription>
+			<RetryButton type="button" onClick={props.fetchMethod}>
+				{retryBtnText}
+			</RetryButton>
+		</ErrorViewContainer>
 	);
 };

@@ -2,6 +2,6 @@ import {
 	LoginService,
 	RegisterService,
 	McqQuestionsService,
-} from "./index.fixtures";
+} from "./index.api";
 
 export { LoginService, RegisterService, McqQuestionsService };

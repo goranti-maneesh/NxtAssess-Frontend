@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const WrapperComponentMainContainer = styled.div`
 	${tw`w-screen flex justify-center bg-Porcelain`}
 
-	@media(max-width: 768px) {
+	@media (max-width: 768px) {
 		${tw`bg-white w-full`}
 	}
 `;

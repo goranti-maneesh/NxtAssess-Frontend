@@ -41,6 +41,8 @@ export class LoginStore {
 	onSuccessLoginApi = (response: LoginSuccessResTypes) => {
 		this.responseStatus = response.responseStatus;
 		setJwtToken(response.jwt_token);
+		this.username = "";
+		this.password = "";
 	};
 
 	onFailureLoginApi = (error_msg: string) => {

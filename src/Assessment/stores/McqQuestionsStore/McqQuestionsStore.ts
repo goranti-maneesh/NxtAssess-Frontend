@@ -195,7 +195,7 @@ export class McqQuestionsStore {
 		this.questionNumsArray = numbersArr;
 		this.noOfUnansweredQuestions = response.total;
 		this.noOfAnsweredQuestions = 0;
-		this.wholeTimerSecs = 6;
+		this.wholeTimerSecs = 600;
 		this.score = 0;
 
 		this.startTimer();

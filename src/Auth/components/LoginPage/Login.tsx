@@ -1,4 +1,5 @@
 import React from "react";
+import { useContext } from "react";
 
 import InputField from "../../../Common/components/InputField";
 import {
@@ -11,6 +12,10 @@ import {
 } from "../../../Common/constants";
 import Loader from "../../../Common/components/Loader";
 import NxtAssessLogo from "../../../Common/components/NxtAssessLogo";
+import { ObjContext } from "../../../Common/context";
+
+import { InputFieldPropsTypes } from "../../stores/Types/loginTypes";
+
 import {
 	ErrorText,
 	AlreadyHaveAccText,
@@ -21,8 +26,6 @@ import {
 	SignUpBtn,
 } from "../RegisterPage/styledComponents";
 
-import { InputFieldPropsTypes } from "../../stores/Types/loginTypes";
-
 export const LoginPage = (props: InputFieldPropsTypes): JSX.Element => {
 	const {
 		onSubmitLoginForm,
@@ -31,6 +34,8 @@ export const LoginPage = (props: InputFieldPropsTypes): JSX.Element => {
 		errorMsg,
 		apiStatus,
 	} = props;
+
+	const { isLightMode } = useContext(ObjContext);
 
 	const onSubmitForm = (event: React.FormEvent<HTMLFormElement>): void => {
 		event.preventDefault();

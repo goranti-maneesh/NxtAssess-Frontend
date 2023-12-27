@@ -36,6 +36,7 @@ export class McqQuestionsStore {
 	incorrectAnsweredMCQs: Array<UpdatedEachQuestionType>;
 	isLastQuestion: boolean;
 	navigate: any;
+	showReviewMistakes: boolean;
 
 	constructor(APIServiceInstance: McqQuestionsServiceTypes) {
 		makeAutoObservable(this);
@@ -69,6 +70,7 @@ export class McqQuestionsStore {
 		this.incorrectAnsweredMCQs = [];
 		this.isLastQuestion = false;
 		this.navigate = {};
+		this.showReviewMistakes = false;
 	}
 
 	startAssessment = (): void => {
@@ -96,6 +98,8 @@ export class McqQuestionsStore {
 				return eachQuestionResults.length === 0;
 			},
 		);
+
+		console.log(incorrectAnswers);
 
 		this.incorrectAnsweredMCQs = incorrectAnswers;
 		this.score = this.APIResponseData.total - incorrectAnswers.length;
@@ -143,6 +147,9 @@ export class McqQuestionsStore {
 
 		if (this.index < this.APIResponseData.total - 1) {
 			const updatedIndex = this.index + 1;
+			this.APIResponseData.questions[updatedIndex].options.sort(
+				this.randomSort,
+			);
 			this.index = updatedIndex;
 			this.existingQuestion =
 				this.APIResponseData.questions[updatedIndex];
@@ -151,6 +158,7 @@ export class McqQuestionsStore {
 
 	selectQuestion = (value: number): void => {
 		this.index = value - 1;
+		this.APIResponseData.questions[value - 1].options.sort(this.randomSort);
 		this.existingQuestion = this.APIResponseData.questions[value - 1];
 
 		if (this.noOfAnsweredQuestions === this.APIResponseData.total - 1) {
@@ -173,10 +181,25 @@ export class McqQuestionsStore {
 		this.navigate = navigate;
 	};
 
+	displayReviewMistakes = (): void => {
+		this.showReviewMistakes = true;
+	};
+
+	hideReviewMistakes = (): void => {
+		this.showReviewMistakes = false;
+	};
+
+	randomSort = () => {
+		return Math.random() - 0.5;
+	};
+
 	onSuccessAPI = (response: FetchResDataTypes): void => {
 		const updatedResponse = response.questions.map(
 			(eachQuestion) => new McqQuestionsModel(eachQuestion),
 		);
+
+		updatedResponse.sort(this.randomSort);
+		updatedResponse[0].options.sort(this.randomSort);
 
 		this.APIResponseData = {
 			total: response.total,
@@ -197,6 +220,7 @@ export class McqQuestionsStore {
 		this.noOfAnsweredQuestions = 0;
 		this.wholeTimerSecs = 600;
 		this.score = 0;
+		this.index = 0;
 
 		this.startTimer();
 	};

@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
 
 import Header from "../../../Common/components/Header/index";
 import WrapperComponent from "../../../Common/components/WrapperComponent";
@@ -9,6 +10,7 @@ import {
 	startAssessmentText,
 	assessmentRoute,
 } from "../../../Common/constants";
+import { ObjContext } from "../../../Common/context";
 
 import {
 	HomeMainContainer,
@@ -28,6 +30,8 @@ import {
 export const Home = (): JSX.Element => {
 	const navigate = useNavigate();
 
+	const { isLightMode } = useContext(ObjContext);
+
 	const onClickStartAssessment = (): void => {
 		navigate(assessmentRoute);
 	};
@@ -36,7 +40,9 @@ export const Home = (): JSX.Element => {
 		return (
 			<Instructions>
 				{homePageInstructionPoints.map((eachPoint) => (
-					<InstructionPoint key={eachPoint.number}>
+					<InstructionPoint
+						key={eachPoint.number}
+						isLightMode={isLightMode}>
 						<InstructionPointNumber>
 							{eachPoint.number}
 						</InstructionPointNumber>
@@ -59,12 +65,13 @@ export const Home = (): JSX.Element => {
 			<HomeMainContainer>
 				<Header />
 				<HomeContainer>
-					<InstructionsSection>
-						<InstructionsHeading>
+					<InstructionsSection isLightMode={isLightMode}>
+						<InstructionsHeading isLightMode={isLightMode}>
 							{instructionsText}
 						</InstructionsHeading>
 						{renderInstructions()}
 						<StartAssessmentBtn
+							isLightMode={isLightMode}
 							type="button"
 							onClick={onClickStartAssessment}>
 							{startAssessmentText}

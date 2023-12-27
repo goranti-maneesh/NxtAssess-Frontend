@@ -3,7 +3,7 @@ export const loginRoute = "/login";
 export const registerRoute = "/register";
 export const assessmentRoute = "/assessment";
 export const resultRoute = "/result";
-export const notFoundRoute = "not-found"
+export const notFoundRoute = "not-found";
 
 export const nxtText = "NXT";
 export const assessText = "Assess";
@@ -25,6 +25,7 @@ export const assessmentCompleteText = "Congrats! You completed the assessment.";
 export const timeTakentext = "Time Taken:";
 export const yourScoreText = "Your Score:";
 export const reattemptText = "Reattempt";
+export const reviewMistakesText = "Review Mistakes"
 export const timeUpText = "Time is up";
 export const didnotCompleteWithInTimeText =
 	"You did not complete the assessment within the time.";
@@ -45,6 +46,10 @@ export const assessmentCompletedImg =
 	"https://res.cloudinary.com/degjdup40/image/upload/v1702832764/Asset_2_1_jlbtle.png";
 export const assessmentTimeUpImg =
 	"https://res.cloudinary.com/degjdup40/image/upload/v1702832754/calender_1_1_xkqfvj.png";
+export const lightModeImage =
+	"https://assets.ccbp.in/frontend/react-js/dark-theme-img.png";
+export const darkModeImage =
+	"https://assets.ccbp.in/frontend/react-js/light-theme-img.png";
 
 export const constraints = {
 	initial: "INITIAL",

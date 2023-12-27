@@ -30,6 +30,9 @@ module.exports = {
 			sans: ["Roboto"],
 		},
 		extend: {
+			gradientColorStopPositions: {
+				30: "30%",
+			},
 			minWidth: {
 				"312px": "312px",
 			},
@@ -49,6 +52,7 @@ module.exports = {
 				Neg_2px: "-2px",
 				"3px": "3px",
 				"6px": "6px",
+				"27px": "27px",
 				"32px": "32px",
 				"34px": "34px",
 				"38px": "38px",
@@ -56,6 +60,7 @@ module.exports = {
 				"45px": "45px",
 				"49px": "49px",
 				"53px": "53px",
+				"54px": "54px",
 				"56px": "56px",
 				"64px": "64px",
 				"77px": "77px",
@@ -122,6 +127,9 @@ module.exports = {
 				Malibu: "#60A5FA",
 				Zumthor: "#EFF6FF",
 				CongressBlue: "#044682",
+				Sirocco: "#797a7a",
+				CapeCod: "#414242",
+				Cararra: "#bfbfba",
 			},
 			boxShadow: {
 				loginPageCard: "0px 4px 16px 0px rgba(123, 135, 148, 0.16)",

@@ -66,7 +66,7 @@ export const ScoreText = styled.span`
 `;
 
 export const ReattemptBtn = styled.button`
-	${tw`bg-ChathamsBlue rounded-4px pr-8 pl-8 pt-2 pb-2 text-white outline-none text-fs16_lh28`}
+	${tw`bg-ChathamsBlue rounded-4px pr-8 pl-8 pt-2 pb-2 text-white outline-none text-fs16_lh28 mr-4`}
 
 	@media(max-width: 768px) {
 		${tw`text-fs12_lh16`}
@@ -97,4 +97,28 @@ export const DidNotCompleteInTimeText = styled.p`
 	}
 `;
 
-// export const ResultPage = styled.div``
+export const ReattemptAndReviewBtn = styled.div``;
+
+export const ReviewMistakesBtn = styled.button`
+	${tw`border border-ChathamsBlue border-solid text-fs16_lh28 rounded-4px pr-8 pl-8 pt-2 pb-2 text-ChathamsBlue`}
+
+	@media(max-width: 768px) {
+		${tw`text-fs12_lh16`}
+	}
+`;
+
+export const ReviewMistakesUlEle = styled.ul``
+
+export const ReviewMistakeLiEle = styled.li``
+
+export const QuestionText = styled.h1``
+
+export const OptionsContainer = styled.div``
+
+export const CorrectOption = styled.p``
+
+export const SelectedOption = styled.p``
+
+// export const ReviewMistakesUlEle = styled.ul``
+
+// export const ReviewMistakesUlEle = styled.ul``

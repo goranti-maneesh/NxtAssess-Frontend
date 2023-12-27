@@ -14,11 +14,13 @@ export const HomeContainer = styled.div`
 export const InstructionsSection = styled.div`
 	${tw`w-631px h-566px rounded-8px shadow-homePage p-12`}
 
+	${(props) => !props.isLightMode && tw`bg-CapeCod`}
+
 	@media(max-width: 1200px) {
 		${tw`h-70vh`}
 	}
 
-	@media (max-width: 992px){
+	@media (max-width: 992px) {
 		${tw`h-50vh`}
 	}
 
@@ -30,17 +32,21 @@ export const InstructionsSection = styled.div`
 export const InstructionsHeading = styled.h1`
 	${tw`text-ChathamsBlue text-fs32_lh24 font-bold mb-8`}
 
+	${(props) => !props.isLightMode && tw`text-white`}
+
 	@media (max-width: 768px) {
 		${tw`text-fs20_lh32 mb-4`}
 	}
 `;
 
 export const InstructionPoint = styled.div`
-	${tw`text-fs24_lh24 text-Bismark mb-6 flex`}
+	${tw`text-fs24_lh24 text-Bismark mb-6 flex `}
 
 	@media (max-width: 992px) {
 		${tw`text-fs14_lh20 mb-3`}
 	}
+
+	${(props) => !props.isLightMode && tw`text-Cararra`}
 `;
 
 export const InstructionPointNumber = styled.span`
@@ -63,6 +69,8 @@ export const StartAssessmentBtn = styled.button`
 	@media (max-width: 768px) {
 		${tw`mt-5 text-fs12_lh16`}
 	}
+
+	${(props) => !props.isLightMode && tw`bg-white text-black`}
 `;
 
 export const HomePageAssessmentImg = styled.img`

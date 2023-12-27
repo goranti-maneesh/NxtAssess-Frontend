@@ -10,5 +10,9 @@ export const WrapperComponentMainContainer = styled.div`
 `;
 
 export const WrapperComponentContainer = styled.div`
-	${tw`w-1440px bg-white`}
+	${tw`w-1440px`}
+
+	${(props) => props.isLightMode && tw`bg-white`}
+
+	${(props) => !props.isLightMode && tw`bg-Sirocco`}
 `;

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { observer } from "mobx-react";
 
 import Header from "../../../Common/components/Header";
 import WrapperComponent from "../../../Common/components/WrapperComponent";
@@ -14,6 +15,7 @@ import {
 	assessmentTimeUpImg,
 	homeRoute,
 	assessmentRoute,
+	reviewMistakesText,
 } from "../../../Common/constants";
 
 import { useMcqQuestionsHook } from "../../hooks/useMcqQuestionsHooks";
@@ -28,13 +30,21 @@ import {
 	TimeTaken,
 	YourScoreText,
 	ScoreText,
+	ReattemptAndReviewBtn,
 	ReattemptBtn,
+	ReviewMistakesBtn,
 	AssessmentTimeUpImg,
 	TimeUpText,
 	DidNotCompleteInTimeText,
+	ReviewMistakesUlEle,
+	ReviewMistakeLiEle,
+	QuestionText,
+	OptionsContainer,
+	CorrectOption,
+	SelectedOption,
 } from "./styledComponents";
 
-export const Result = (): JSX.Element => {
+export const Result = observer((): JSX.Element => {
 	const mcqQuestionsHook = useMcqQuestionsHook();
 
 	const navigate = useNavigate();
@@ -45,6 +55,10 @@ export const Result = (): JSX.Element => {
 		wholeTimerSecs,
 		reattemptAssessment,
 		noOfAnsweredQuestions,
+		displayReviewMistakes,
+		hideReviewMistakes,
+		showReviewMistakes,
+		incorrectAnsweredMCQs,
 	} = mcqQuestionsHook;
 
 	useEffect(() => {
@@ -71,9 +85,16 @@ export const Result = (): JSX.Element => {
 					{`${yourScoreText} `}
 					<ScoreText>{score}</ScoreText>
 				</YourScoreText>
-				<ReattemptBtn type="button" onClick={onClcikReattemptBtn}>
-					{reattemptText}
-				</ReattemptBtn>
+				<ReattemptAndReviewBtn>
+					<ReattemptBtn type="button" onClick={onClcikReattemptBtn}>
+						{reattemptText}
+					</ReattemptBtn>
+					<ReviewMistakesBtn
+						type="button"
+						onClick={displayReviewMistakes}>
+						{reviewMistakesText}
+					</ReviewMistakesBtn>
+				</ReattemptAndReviewBtn>
 			</ResultPageContainer>
 		);
 	};
@@ -90,9 +111,51 @@ export const Result = (): JSX.Element => {
 					{`${yourScoreText} `}
 					<ScoreText>{score}</ScoreText>
 				</YourScoreText>
-				<ReattemptBtn type="button" onClick={onClcikReattemptBtn}>
-					{reattemptText}
-				</ReattemptBtn>
+				<ReattemptAndReviewBtn>
+					<ReattemptBtn type="button" onClick={onClcikReattemptBtn}>
+						{reattemptText}
+					</ReattemptBtn>
+					<ReviewMistakesBtn
+						type="button"
+						onClick={displayReviewMistakes}>
+						{reviewMistakesText}
+					</ReviewMistakesBtn>
+				</ReattemptAndReviewBtn>
+			</ResultPageContainer>
+		);
+	};
+
+	const renderReviewMistakes = () => {
+		console.log(incorrectAnsweredMCQs);
+		return (
+			<ResultPageContainer>
+				<ReviewMistakesUlEle>
+					{incorrectAnsweredMCQs.map((eachReview) => {
+						const correctOption = eachReview.options.filter(
+							(eachOption) => eachOption.isCorrect === "true",
+						);
+						const selectedOption = eachReview.options.filter(
+							(eachOption) =>
+								eachOption.id ===
+								eachReview.userSelectedOptionId,
+						);
+						return (
+							<ReviewMistakeLiEle>
+								<QuestionText>
+									{eachReview.questionText}
+								</QuestionText>
+								<OptionsContainer>
+									<CorrectOption>
+										{correctOption[0].text}
+									</CorrectOption>
+									<SelectedOption>
+										{selectedOption[0].text}
+									</SelectedOption>
+								</OptionsContainer>
+							</ReviewMistakeLiEle>
+						);
+					})}
+				</ReviewMistakesUlEle>
 			</ResultPageContainer>
 		);
 	};
@@ -102,11 +165,13 @@ export const Result = (): JSX.Element => {
 			<ResultPage>
 				<Header />
 				<ResultPageMainContainer>
-					{wholeTimerSecs !== 0
+					{showReviewMistakes
+						? renderReviewMistakes()
+						: wholeTimerSecs !== 0
 						? renderAssessmentCompletePage()
 						: renderTimeUpAssessmentPage()}
 				</ResultPageMainContainer>
 			</ResultPage>
 		</WrapperComponent>
 	);
-};
+});

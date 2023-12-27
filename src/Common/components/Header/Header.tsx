@@ -1,6 +1,14 @@
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
 
-import { NxtAssessLightImg, logoutText, loginRoute } from "../../constants";
+import {
+	NxtAssessLightImg,
+	logoutText,
+	loginRoute,
+	darkModeImage,
+	lightModeImage,
+} from "../../constants";
+import { ObjContext } from "../../context";
 import { removeJwtToken } from "../../utils/StorageUtils";
 
 import NxtAssessLogo from "../NxtAssessLogo";
@@ -8,27 +16,43 @@ import NxtAssessLogo from "../NxtAssessLogo";
 import {
 	HeaderMainContainer,
 	HeaderContainer,
+	ModeAndLogoutBtnContainer,
+	ModeBtn,
+	ModeImg,
 	LogoutBtn,
 } from "./styledComponents";
 
 export const Header = (): JSX.Element => {
 	const navigate = useNavigate();
 
+	const { isLightMode, onChangeScreenColorMode } = useContext(ObjContext);
+
 	const onClickLogoutBtn = (): void => {
 		removeJwtToken();
 		navigate(loginRoute, { replace: true });
 	};
 
+	const onChangeScreenColor = () => {
+		onChangeScreenColorMode();
+	};
+
 	return (
-		<HeaderMainContainer>
+		<HeaderMainContainer isLightMode={isLightMode}>
 			<HeaderContainer>
 				<NxtAssessLogo
 					nxtAssessImg={NxtAssessLightImg}
 					textColor="white"
 				/>
-				<LogoutBtn type="button" onClick={onClickLogoutBtn}>
-					{logoutText}
-				</LogoutBtn>
+				<ModeAndLogoutBtnContainer>
+					<ModeBtn type="button" onClick={onChangeScreenColor}>
+						<ModeImg
+							src={isLightMode ? lightModeImage : darkModeImage}
+						/>
+					</ModeBtn>
+					<LogoutBtn type="button" onClick={onClickLogoutBtn}>
+						{logoutText}
+					</LogoutBtn>
+				</ModeAndLogoutBtnContainer>
 			</HeaderContainer>
 		</HeaderMainContainer>
 	);

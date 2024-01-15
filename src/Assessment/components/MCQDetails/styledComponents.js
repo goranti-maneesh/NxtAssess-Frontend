@@ -2,16 +2,20 @@ import tw from "twin.macro";
 import styled from "styled-components";
 
 export const MCQDetailsContainer = styled.div`
-	${tw`h-full `}
+	${tw`h-full bg-white shadow-assessmentPage`}
 `;
 
 export const TimerContainer = styled.div`
-	${tw`bg-EastBay rounded-2px pl-6 pr-6 pt-3 pb-3 flex justify-between items-center h-53px mb-2`}
+	${tw`bg-EastBay rounded-2px pl-6 pr-6 pt-3 pb-3 flex justify-between items-center h-53px`}
 
 	@media(max-width: 768px) {
 		${tw`h-45px p-3 mb-3`}
 	}
 `;
+
+export const DividerContainer = styled.div`
+	${tw`h-2 bg-Selago`}
+`
 
 export const TimeLeftText = styled.p`
 	${tw`text-CatskillWhite text-fs18_lh30 font-normal`}
@@ -30,7 +34,7 @@ export const Timer = styled.p`
 `;
 
 export const McqQuestionDetails = styled.div`
-	${tw`h-92per bg-white shadow-assessmentPage flex flex-col`}
+	${tw` flex flex-col`}
 `;
 
 export const NoOfAnsweredUnansweredQuestions = styled.div`
@@ -72,7 +76,7 @@ export const QuestionNumsText = styled.h1`
 `;
 
 export const QuestionNumsUlElement = styled.ul`
-	${tw`flex flex-wrap`}
+	${tw`flex flex-wrap mb-12`}
 `;
 
 export const EachNumberLiElement = styled.li`

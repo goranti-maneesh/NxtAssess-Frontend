@@ -35,6 +35,11 @@ export const retryBtnText = "Retry";
 export const notFoundHeading = "Page Not Found";
 export const notFounDescription =
 	"We are sorry, the page you requested could not be found";
+export const incorrectAnsText = "Incorrect Answers: "
+export const correctAnsText = "Correct Answers: "
+export const timeText = "00:10:00";
+export const doneText = "Done"
+export const nextText = "Next"
 
 export const NxtAssessImg =
 	"https://res.cloudinary.com/degjdup40/image/upload/v1701530848/image_28_Traced_lty02g.png";

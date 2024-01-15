@@ -2,7 +2,7 @@ import tw from "twin.macro";
 import styled from "styled-components";
 
 export const WrapperComponentMainContainer = styled.div`
-	${tw`w-screen flex justify-center bg-Porcelain`}
+	${tw`flex justify-center bg-Porcelain`}
 
 	@media (max-width: 768px) {
 		${tw`bg-white w-full`}

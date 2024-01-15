@@ -16,6 +16,7 @@ import {
 	TimerContainer,
 	TimeLeftText,
 	Timer,
+	DividerContainer,
 	McqQuestionDetails,
 	NoOfAnsweredUnansweredQuestions,
 	NoOfQuestions,
@@ -72,6 +73,7 @@ export const MCQDetails = observer((): JSX.Element => {
 				<TimeLeftText>{timeLeftText}</TimeLeftText>
 				<Timer>{timerText}</Timer>
 			</TimerContainer>
+			<DividerContainer></DividerContainer>
 			<McqQuestionDetails>
 				<NoOfAnsweredUnansweredQuestions>
 					<NoOfQuestions>

@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const AssessmentMainContainer = styled.div``;
 
 export const AssessmentContainer = styled.div`
-	${tw`p-8 bg-Selago h-90vh flex`}
+	${tw`p-8 bg-Selago h-85vh flex`}
 
 	@media (max-width: 768px) {
 		${tw`bg-white flex-col pt-4 pl-6 pr-6 pb-8 items-center h-full`}
@@ -12,7 +12,7 @@ export const AssessmentContainer = styled.div`
 `;
 
 export const MCQQuestionSection = styled.div`
-	${tw`bg-white shadow-assessmentPage p-12 h-full max-h-837px flex flex-col justify-between mr-8 max-w-928px w-70per `}
+	${tw`bg-white shadow-assessmentPage p-12 h-full max-h-837px flex flex-col justify-between mr-8 max-w-928px w-70per overflow-auto`}
 
 	@media(max-width: 992px) {
 		${tw`w-50per`}
@@ -48,7 +48,7 @@ export const HrLine = styled.hr`
 `;
 
 export const OptionsUlElement = styled.ul`
-	${tw`flex flex-wrap`}
+	${tw`flex flex-wrap overflow-auto`}
 `;
 
 export const OptionLiElement = styled.li``;

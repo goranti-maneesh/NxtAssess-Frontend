@@ -5,173 +5,222 @@ import { observer } from "mobx-react";
 import Header from "../../../Common/components/Header";
 import WrapperComponent from "../../../Common/components/WrapperComponent";
 import {
-	assessmentCompleteText,
-	timeTakentext,
-	yourScoreText,
-	reattemptText,
-	timeUpText,
-	didnotCompleteWithInTimeText,
-	assessmentCompletedImg,
-	assessmentTimeUpImg,
-	homeRoute,
-	assessmentRoute,
-	reviewMistakesText,
+    assessmentCompleteText,
+    timeTakentext,
+    yourScoreText,
+    reattemptText,
+    timeUpText,
+    didnotCompleteWithInTimeText,
+    assessmentCompletedImg,
+    assessmentTimeUpImg,
+    homeRoute,
+    assessmentRoute,
+    reviewMistakesText,
+    doneText,
+    nextText,
 } from "../../../Common/constants";
 
 import { useMcqQuestionsHook } from "../../hooks/useMcqQuestionsHooks";
 
 import {
-	ResultPage,
-	ResultPageMainContainer,
-	ResultPageContainer,
-	AssessmentCompleteImg,
-	CongratsText,
-	TimeTakenTextAndTime,
-	TimeTaken,
-	YourScoreText,
-	ScoreText,
-	ReattemptAndReviewBtn,
-	ReattemptBtn,
-	ReviewMistakesBtn,
-	AssessmentTimeUpImg,
-	TimeUpText,
-	DidNotCompleteInTimeText,
-	ReviewMistakesUlEle,
-	ReviewMistakeLiEle,
-	QuestionText,
-	OptionsContainer,
-	CorrectOption,
-	SelectedOption,
+    ResultPage,
+    ResultPageMainContainer,
+    ResultPageContainer,
+    AssessmentCompleteImg,
+    CongratsText,
+    TimeTakenTextAndTime,
+    TimeTaken,
+    YourScoreText,
+    ScoreText,
+    ReattemptAndReviewBtn,
+    ReattemptBtn,
+    ReviewMistakesBtn,
+    AssessmentTimeUpImg,
+    TimeUpText,
+    DidNotCompleteInTimeText,
+    ReviewMistakesContainer,
+    ReviewMistakeEle,
+    QuestionText,
+    OptionsUlEle,
+    EachOptionLiEle,
+    EachOptionSpanEle,
+    ScoresSection,
+    NextAndDoneBtnsContainer,
+    DoneAndNextButton,
+    ResultPageReviewsContainer,
+    WrongIcon,
+    RightIcon,
 } from "./styledComponents";
 
 export const Result = observer((): JSX.Element => {
-	const mcqQuestionsHook = useMcqQuestionsHook();
+    const mcqQuestionsHook = useMcqQuestionsHook();
 
-	const navigate = useNavigate();
+    const navigate = useNavigate();
 
-	const {
-		score,
-		timerText,
-		wholeTimerSecs,
-		reattemptAssessment,
-		noOfAnsweredQuestions,
-		displayReviewMistakes,
-		hideReviewMistakes,
-		showReviewMistakes,
-		incorrectAnsweredMCQs,
-	} = mcqQuestionsHook;
+    const {
+        score,
+        timerText,
+        wholeTimerSecs,
+        reattemptAssessment,
+        noOfAnsweredQuestions,
+        displayReviewMistakes,
+        hideReviewMistakes,
+        showReviewMistakes,
+        incorrectAnsweredMCQs,
+        incorrectQuestionIndex,
+        renderNextIncorrectQuestion,
+    } = mcqQuestionsHook;
 
-	useEffect(() => {
-		if (wholeTimerSecs === 600 && noOfAnsweredQuestions === 0) {
-			navigate(homeRoute, { replace: true });
-		}
-	}, []);
+    useEffect(() => {
+        if (wholeTimerSecs === 600 && noOfAnsweredQuestions === 0) {
+            navigate(homeRoute, { replace: true });
+        }
+    }, []);
 
-	const onClcikReattemptBtn = (): void => {
-		reattemptAssessment(navigate);
-		navigate(assessmentRoute, { replace: true });
-	};
+    const onClcikReattemptBtn = (): void => {
+        reattemptAssessment(navigate);
+        navigate(assessmentRoute, { replace: true });
+    };
 
-	const renderAssessmentCompletePage = (): JSX.Element => {
-		return (
-			<ResultPageContainer>
-				<AssessmentCompleteImg src={assessmentCompletedImg} />
-				<CongratsText>{assessmentCompleteText}</CongratsText>
-				<TimeTakenTextAndTime>
-					{`${timeTakentext} `}
-					<TimeTaken>{timerText}</TimeTaken>
-				</TimeTakenTextAndTime>
-				<YourScoreText>
-					{`${yourScoreText} `}
-					<ScoreText>{score}</ScoreText>
-				</YourScoreText>
-				<ReattemptAndReviewBtn>
-					<ReattemptBtn type="button" onClick={onClcikReattemptBtn}>
-						{reattemptText}
-					</ReattemptBtn>
-					<ReviewMistakesBtn
-						type="button"
-						onClick={displayReviewMistakes}>
-						{reviewMistakesText}
-					</ReviewMistakesBtn>
-				</ReattemptAndReviewBtn>
-			</ResultPageContainer>
-		);
-	};
+    const onClickNextBtn = (): void => {
+        renderNextIncorrectQuestion();
+    };
 
-	const renderTimeUpAssessmentPage = (): JSX.Element => {
-		return (
-			<ResultPageContainer>
-				<AssessmentTimeUpImg src={assessmentTimeUpImg} />
-				<TimeUpText>{timeUpText}</TimeUpText>
-				<DidNotCompleteInTimeText>
-					{didnotCompleteWithInTimeText}
-				</DidNotCompleteInTimeText>
-				<YourScoreText>
-					{`${yourScoreText} `}
-					<ScoreText>{score}</ScoreText>
-				</YourScoreText>
-				<ReattemptAndReviewBtn>
-					<ReattemptBtn type="button" onClick={onClcikReattemptBtn}>
-						{reattemptText}
-					</ReattemptBtn>
-					<ReviewMistakesBtn
-						type="button"
-						onClick={displayReviewMistakes}>
-						{reviewMistakesText}
-					</ReviewMistakesBtn>
-				</ReattemptAndReviewBtn>
-			</ResultPageContainer>
-		);
-	};
+    const onClickHideReviews = (): void => {
+        hideReviewMistakes();
+    };
 
-	const renderReviewMistakes = () => {
-		console.log(incorrectAnsweredMCQs);
-		return (
-			<ResultPageContainer>
-				<ReviewMistakesUlEle>
-					{incorrectAnsweredMCQs.map((eachReview) => {
-						const correctOption = eachReview.options.filter(
-							(eachOption) => eachOption.isCorrect === "true",
-						);
-						const selectedOption = eachReview.options.filter(
-							(eachOption) =>
-								eachOption.id ===
-								eachReview.userSelectedOptionId,
-						);
-						return (
-							<ReviewMistakeLiEle>
-								<QuestionText>
-									{eachReview.questionText}
-								</QuestionText>
-								<OptionsContainer>
-									<CorrectOption>
-										{correctOption[0].text}
-									</CorrectOption>
-									<SelectedOption>
-										{selectedOption[0].text}
-									</SelectedOption>
-								</OptionsContainer>
-							</ReviewMistakeLiEle>
-						);
-					})}
-				</ReviewMistakesUlEle>
-			</ResultPageContainer>
-		);
-	};
+    const renderReviewAndReattemptBtns = () => {
+        return (
+            <ReattemptAndReviewBtn>
+                <ReattemptBtn type="button" onClick={onClcikReattemptBtn}>
+                    {reattemptText}
+                </ReattemptBtn>
+                {incorrectAnsweredMCQs.length !== 0 ? (
+                    <ReviewMistakesBtn
+                        type="button"
+                        onClick={displayReviewMistakes}
+                    >
+                        {reviewMistakesText}
+                    </ReviewMistakesBtn>
+                ) : null}
+            </ReattemptAndReviewBtn>
+        );
+    };
 
-	return (
-		<WrapperComponent>
-			<ResultPage>
-				<Header />
-				<ResultPageMainContainer>
-					{showReviewMistakes
-						? renderReviewMistakes()
-						: wholeTimerSecs !== 0
-						? renderAssessmentCompletePage()
-						: renderTimeUpAssessmentPage()}
-				</ResultPageMainContainer>
-			</ResultPage>
-		</WrapperComponent>
-	);
+    const renderScores = () => {
+        return (
+            <ScoresSection>
+                <YourScoreText>
+                    {`${yourScoreText} `}
+                    <ScoreText>{score}</ScoreText>
+                </YourScoreText>
+            </ScoresSection>
+        );
+    };
+
+    const renderAssessmentCompletePage = (): JSX.Element => {
+        return (
+            <ResultPageContainer>
+                <AssessmentCompleteImg src={assessmentCompletedImg} />
+                <CongratsText>{assessmentCompleteText}</CongratsText>
+                <TimeTakenTextAndTime>
+                    {`${timeTakentext} `}
+                    <TimeTaken>{timerText}</TimeTaken>
+                </TimeTakenTextAndTime>
+                {renderScores()}
+                {renderReviewAndReattemptBtns()}
+            </ResultPageContainer>
+        );
+    };
+
+    const renderTimeUpAssessmentPage = (): JSX.Element => {
+        return (
+            <ResultPageContainer>
+                <AssessmentTimeUpImg src={assessmentTimeUpImg} />
+                <TimeUpText>{timeUpText}</TimeUpText>
+                <DidNotCompleteInTimeText>
+                    {didnotCompleteWithInTimeText}
+                </DidNotCompleteInTimeText>
+                {renderScores()}
+                {renderReviewAndReattemptBtns()}
+            </ResultPageContainer>
+        );
+    };
+
+    const renderNextAndDoneBtns = () => {
+        return (
+            <NextAndDoneBtnsContainer>
+                {incorrectAnsweredMCQs.length - 1 === incorrectQuestionIndex ? (
+                    <DoneAndNextButton
+                        type="buton"
+                        onClick={onClickHideReviews}
+                    >
+                        {doneText}
+                    </DoneAndNextButton>
+                ) : (
+                    <DoneAndNextButton type="button" onClick={onClickNextBtn}>
+                        {nextText}
+                    </DoneAndNextButton>
+                )}
+            </NextAndDoneBtnsContainer>
+        );
+    };
+
+    const renderReviewMistakes = () => {
+        const existingReviewQue = incorrectAnsweredMCQs[incorrectQuestionIndex];
+        return (
+            <ResultPageReviewsContainer>
+                <ReviewMistakesContainer>
+                    <ReviewMistakeEle>
+                        <QuestionText>
+                            {existingReviewQue.questionText}
+                        </QuestionText>
+                        <OptionsUlEle>
+                            {existingReviewQue.options.map((eachOption) => {
+                                const incorrectOption =
+                                    existingReviewQue.userSelectedOptionId ===
+                                    eachOption.id;
+                                const correctOption =
+                                    eachOption.isCorrect === "true";
+
+                                return (
+                                    <EachOptionLiEle key={eachOption.id}>
+                                        <EachOptionSpanEle
+                                            incorrectOption={incorrectOption}
+                                            correctOption={correctOption}
+                                        >
+                                            {eachOption.text}
+                                        </EachOptionSpanEle>
+                                        {correctOption && (
+                                            <RightIcon/>
+                                        )}
+                                        {incorrectOption && (
+                                            <WrongIcon />
+                                        )}
+                                    </EachOptionLiEle>
+                                );
+                            })}
+                        </OptionsUlEle>
+                    </ReviewMistakeEle>
+                </ReviewMistakesContainer>
+                {renderNextAndDoneBtns()}
+            </ResultPageReviewsContainer>
+        );
+    };
+
+    return (
+        <WrapperComponent>
+            <ResultPage>
+                <Header />
+                <ResultPageMainContainer>
+                    {showReviewMistakes
+                        ? renderReviewMistakes()
+                        : wholeTimerSecs !== 0
+                        ? renderAssessmentCompletePage()
+                        : renderTimeUpAssessmentPage()}
+                </ResultPageMainContainer>
+            </ResultPage>
+        </WrapperComponent>
+    );
 });

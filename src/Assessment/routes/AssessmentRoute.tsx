@@ -11,63 +11,68 @@ import Assessment from "../components/Assessment";
 import { useMcqQuestionsHook } from "../hooks/useMcqQuestionsHooks";
 
 import {
-	AssessmentRouteCantainer,
-	LoaderAssessmentContainer,
+  AssessmentRouteCantainer,
+  LoaderAssessmentContainer,
 } from "./styledComponents";
 import ErrorView from "../../Common/components/ErrorView";
 
 export const AssessmentRoute = observer((): JSX.Element => {
-	const mcqQuestionSHook = useMcqQuestionsHook();
+  const mcqQuestionSHook = useMcqQuestionsHook();
 
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
-	const {
-		fetchData,
-		selectOption,
-		existingQuestion,
-		nextQuestion,
-		apiStatus,
-		setNavigateMethod,
-	} = mcqQuestionSHook;
+  const {
+    fetchData,
+    selectOption,
+    existingQuestion,
+    nextQuestion,
+    apiStatus,
+    setNavigateMethod,
+    stopTimer,
+  } = mcqQuestionSHook;
 
-	useEffect(() => {
-		if (apiStatus === constraints.initial) {
-			fetchData();
-			setNavigateMethod(navigate);
-		}
-	}, []);
+  useEffect(() => {
+    return () => {
+      stopTimer();
+    };
+  }, []);
 
-	const renderSuccessView = (): JSX.Element => <Assessment />;
+  if (apiStatus === constraints.initial) {
+    fetchData();
+    setNavigateMethod(navigate);
+  }
 
-	const renderLoader = (): JSX.Element => (
-		<LoaderAssessmentContainer>
-			<Loader color="#263868" height={50} width={50} secondaryColor="" />
-		</LoaderAssessmentContainer>
-	);
+  const renderSuccessView = (): JSX.Element => <Assessment />;
 
-	const renderFailure = (): JSX.Element => (
-		<ErrorView fetchMethod={fetchData} />
-	);
+  const renderLoader = (): JSX.Element => (
+    <LoaderAssessmentContainer>
+      <Loader color="#263868" height={50} width={50} secondaryColor="" />
+    </LoaderAssessmentContainer>
+  );
 
-	const assessmentRouteViews = (): JSX.Element | null => {
-		switch (apiStatus) {
-			case constraints.success:
-				return renderSuccessView();
-			case constraints.loading:
-				return renderLoader();
-			case constraints.failure:
-				return renderFailure();
-			default:
-				return null;
-		}
-	};
+  const renderFailure = (): JSX.Element => (
+    <ErrorView fetchMethod={fetchData} />
+  );
 
-	return (
-		<WrapperComponent>
-			<AssessmentRouteCantainer>
-				<Header />
-				{assessmentRouteViews()}
-			</AssessmentRouteCantainer>
-		</WrapperComponent>
-	);
+  const assessmentRouteViews = (): JSX.Element | null => {
+    switch (apiStatus) {
+      case constraints.success:
+        return renderSuccessView();
+      case constraints.loading:
+        return renderLoader();
+      case constraints.failure:
+        return renderFailure();
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <WrapperComponent>
+      <AssessmentRouteCantainer>
+        <Header />
+        {assessmentRouteViews()}
+      </AssessmentRouteCantainer>
+    </WrapperComponent>
+  );
 });

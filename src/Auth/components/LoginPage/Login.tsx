@@ -1,7 +1,7 @@
-import React from "react";
+import React, { memo, lazy } from "react";
 import { useContext } from "react";
 
-import InputField from "../../../Common/components/InputField";
+// import InputField from "../../../Common/components/InputField";
 import {
 	newToNxtAssessText,
 	NxtAssessImg,
@@ -26,7 +26,9 @@ import {
 	SignUpBtn,
 } from "../RegisterPage/styledComponents";
 
-export const LoginPage = (props: InputFieldPropsTypes): JSX.Element => {
+const InputField = lazy(() => import("../../../Common/components/InputField"));
+
+export const LoginPage = memo((props: InputFieldPropsTypes): JSX.Element => {
 	const {
 		onSubmitLoginForm,
 		usernameProps,
@@ -84,4 +86,4 @@ export const LoginPage = (props: InputFieldPropsTypes): JSX.Element => {
 			</RegisterPageContainer>
 		</RegisterPageMainContainer>
 	);
-};
+});

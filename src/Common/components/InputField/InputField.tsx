@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import { InputFieldPropsTypes } from "../../types";
 
 import {
@@ -7,11 +9,13 @@ import {
 	StarIcon,
 } from "./styledComponents";
 
-export const InputField = (props: InputFieldPropsTypes): JSX.Element => {
+export const InputField = memo((props: InputFieldPropsTypes): JSX.Element => {
 	const { requiredProps } = props;
 
 	const { type, onChangeMethod, labelText, id, placeholder, value } =
 		requiredProps;
+
+	console.log(labelText, "labelText");
 
 	return (
 		<InputFieldContainer>
@@ -27,4 +31,4 @@ export const InputField = (props: InputFieldPropsTypes): JSX.Element => {
 			/>
 		</InputFieldContainer>
 	);
-};
+});

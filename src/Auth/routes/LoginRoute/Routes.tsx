@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback, lazy, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react";
 
@@ -7,11 +7,13 @@ import { constraints, homeRoute } from "../../../Common/constants";
 import { getJwtToken } from "../../../Common/utils/StorageUtils";
 import ErrorView from "../../../Common/components/ErrorView";
 
-import LoginPage from "../../components/LoginPage";
+// import LoginPage from "../../components/LoginPage";
 import { useLoginHook } from "../../hooks/useLoginHooks";
 import { InputPropsTypes } from "../../stores/Types/loginTypes";
 
 import { RegisterPageRouteContainer } from "../RegisterRouter/styledComponents";
+
+const LoginPage = lazy(() => import("../../components/LoginPage"));
 
 export const LoginPageRoute = observer((): JSX.Element => {
 	const loginHook = useLoginHook();
@@ -27,7 +29,9 @@ export const LoginPageRoute = observer((): JSX.Element => {
 		responseStatus,
 	} = loginHook;
 
-	const onSubmitLoginForm = async (): Promise<void> => {
+	const onSubmitLoginForm = useCallback(async (): Promise<void> => {
+		const { username, password } = loginHook;
+		console.log(username, password, "submit");
 		if (username === "" || password === "") {
 			const { setErrorMsg } = loginHook;
 
@@ -35,23 +39,26 @@ export const LoginPageRoute = observer((): JSX.Element => {
 		} else {
 			fetchLoginApi(navigate);
 		}
-	};
+	}, [responseStatus]);
 
-	const onChangeUsername = (
-		event: React.FormEvent<HTMLInputElement>,
-	): void => {
-		const { setUsername } = loginHook;
+	const onChangeUsername = useCallback(
+		(event: React.FormEvent<HTMLInputElement>): void => {
+			const { setUsername } = loginHook;
 
-		setUsername(event.currentTarget.value);
-	};
+			setUsername(event.currentTarget.value);
+			console.log(username, "username");
+		},
+		[username]
+	);
 
-	const onChangePassword = (
-		event: React.FormEvent<HTMLInputElement>,
-	): void => {
-		const { setPassword } = loginHook;
+	const onChangePassword = useCallback(
+		(event: React.FormEvent<HTMLInputElement>): void => {
+			const { setPassword } = loginHook;
 
-		setPassword(event.currentTarget.value);
-	};
+			setPassword(event.currentTarget.value);
+		},
+		[password]
+	);
 
 	useEffect(() => {
 		if (getJwtToken() !== null) {
@@ -59,23 +66,29 @@ export const LoginPageRoute = observer((): JSX.Element => {
 		}
 	}, []);
 
-	const usernameProps: InputPropsTypes = {
-		type: "text",
-		value: username,
-		onChangeMethod: onChangeUsername,
-		placeholder: "Username",
-		id: "username-login",
-		labelText: "USERNAME",
-	};
+	const usernameProps: InputPropsTypes = useMemo(
+		() => ({
+			type: "text",
+			value: username,
+			onChangeMethod: onChangeUsername,
+			placeholder: "Username",
+			id: "username-login",
+			labelText: "USERNAME",
+		}),
+		[username, onChangeUsername]
+	);
 
-	const passwordProps: InputPropsTypes = {
-		type: "password",
-		value: password,
-		onChangeMethod: onChangePassword,
-		placeholder: "Password",
-		id: "password-login",
-		labelText: "PASSWORD",
-	};
+	const passwordProps: InputPropsTypes = useMemo(
+		() => ({
+			type: "password",
+			value: password,
+			onChangeMethod: onChangePassword,
+			placeholder: "Password",
+			id: "password-login",
+			labelText: "PASSWORD",
+		}),
+		[password, onChangePassword]
+	);
 
 	const renderLoginPage = (): JSX.Element => (
 		<LoginPage

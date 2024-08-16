@@ -28,6 +28,7 @@ export class LoginStore {
 
 	setUsername = (username: string) => {
 		this.username = username;
+		console.log(this.username, "store username");
 	};
 
 	setPassword = (password: string) => {
